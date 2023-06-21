@@ -6,14 +6,15 @@ import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.TaskRepository;
 import com.demoDesk.desk.repositories.TicketRepository;
-import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -57,6 +58,26 @@ public class TicketService {
     @Transactional
     public void saveTicket(Ticket ticket) {
         ticketRepository.save(ticket);
+    }
+
+    public List<Ticket> sortTicketsByCreationDate (List<Ticket> tickets){
+        return tickets.stream().sorted(Comparator.comparing(Ticket::getCreationDate)).collect(Collectors.toList());
+    }
+
+    public List<Ticket> sortTicketsByCloseDate (List<Ticket> tickets){
+        return tickets.stream().sorted(Comparator.comparing(Ticket::getCloseDate)).collect(Collectors.toList());
+    }
+
+    public List<Ticket> sortTicketsByExpirationDate (List<Ticket> tickets){
+        return tickets.stream().sorted(Comparator.comparing(Ticket::getExpirationDate)).collect(Collectors.toList());
+    }
+
+    public List<Ticket> sortTicketsByStatus (List<Ticket> tickets){
+        return tickets.stream().sorted(Comparator.comparing(Ticket::getRequestStatus)).collect(Collectors.toList());
+    }
+
+    public List<Ticket> sortTicketsByPriority (List<Ticket> tickets){
+        return tickets.stream().sorted(Comparator.comparing(Ticket::getPriority)).collect(Collectors.toList());
     }
 
 }

@@ -12,7 +12,7 @@ CREATE TABLE elements (
     art varchar(100),
     title varchar(100),
     docs_id int,
-    department_id int,
+    department_id int references departments,
     description varchar);
 
 INSERT INTO elements (art, title, docs_id, department_id, description)
@@ -27,6 +27,7 @@ CREATE TABLE products_elements (
 
 CREATE TABLE tickets (
     id serial PRIMARY KEY,
+    title varchar,
     creation_date timestamp,
     close_date timestamp,
     status varchar,

@@ -20,6 +20,9 @@ public class Ticket {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "creation_date")
     private Timestamp creationDate;
 
