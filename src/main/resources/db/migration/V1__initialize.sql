@@ -11,13 +11,12 @@ CREATE TABLE elements (
     id serial PRIMARY KEY,
     art varchar(100),
     title varchar(100),
-    docs_id int,
     department_id int references departments,
     description varchar);
 
-INSERT INTO elements (art, title, docs_id, department_id, description)
-VALUES ('el0001','Element1', 1, 1, 'just element 1'), ('el0002','Element2', 2, 1, 'just element 2'), ('el0003','Element3', 3, 2, 'just element 3'),
-('el0004','Element4', 4, 2, 'just element 4');
+INSERT INTO elements (art, title, department_id, description)
+VALUES ('el0001','Element1', 1, 'just element 1'), ('el0002','Element2', 1, 'just element 2'), ('el0003','Element3', 2, 'just element 3'),
+('el0004','Element4', 2, 'just element 4');
 
 CREATE TABLE products_elements (
     product_id int references  products,

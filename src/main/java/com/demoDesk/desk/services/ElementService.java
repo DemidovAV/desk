@@ -1,7 +1,9 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.models.Department;
 import com.demoDesk.desk.models.Element;
 import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
@@ -17,11 +19,15 @@ import java.util.List;
 public class ElementService {
 
     private ElementRepository elementRepository;
+    private DepartmentRepository departmentRepository;
     @Autowired
     public void setElementRepository(ElementRepository elementRepository) {
         this.elementRepository = elementRepository;
     }
-
+    @Autowired
+    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
 
     public List<Element> getElementsWithFiltering(Specification<Element> specification) {
         return elementRepository.findAll(specification);
@@ -44,5 +50,10 @@ public class ElementService {
     @Transactional
     public void saveElement(Element element) {
         elementRepository.save(element);
+    }
+
+    @Transactional(readOnly = true)
+    public String getDepartmentTitle(Element element) {
+        return departmentRepository.findById(element.getDepartmentId()).get().getTitle();
     }
 }

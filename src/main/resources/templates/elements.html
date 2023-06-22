@@ -37,7 +37,6 @@
         <tr>
             <th>ID</th>
             <th>Название детали</th>
-            <th>Количество</th>
             <th>Действия</th>
             <th>Информация о детали</th>
         </tr>
@@ -46,7 +45,6 @@
         <tr th:each="element : ${elements}">
             <td th:text="${element.id}"/>
             <td th:text="${element.title}"/>
-            <td th:text="${element.quantity}"/>
             <td>
                 <a th:href="@{'/elements/editElement/' + ${element.id}}" th:text="Редактировать"/>
                 <a th:text="' | '" />
