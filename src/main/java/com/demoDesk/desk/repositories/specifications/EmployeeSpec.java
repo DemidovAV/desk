@@ -15,8 +15,4 @@ public class EmployeeSpec {
                 criteriaBuilder.equal(root.get("id"), id);
     }
 
-    public static Specification<Employee> artContains (String word) {
-        return (Specification<Employee>) (root, criteriaQuery, criteriaBuilder) ->
-                criteriaBuilder.like(criteriaBuilder.lower(root.get("art")), "%" + word.toLowerCase() + "%");
-    }
 }
