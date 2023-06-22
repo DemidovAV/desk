@@ -52,8 +52,4 @@ public class ElementService {
         elementRepository.save(element);
     }
 
-    @Transactional(readOnly = true)
-    public String getDepartmentTitle(Element element) {
-        return departmentRepository.findById(element.getDepartmentId()).get().getTitle();
-    }
 }

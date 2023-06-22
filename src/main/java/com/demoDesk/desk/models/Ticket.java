@@ -50,4 +50,8 @@ public class Ticket {
 
     @OneToMany(mappedBy = "ticket")
     private List<Task> tasks;
+
+    public String getProductTitle() {
+        return product.getTitle();
+    }
 }

@@ -25,12 +25,17 @@ public class Element {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "department_id")
-    private Long departmentId;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @Column(name = "description")
     private String description;
 
     @ManyToMany(mappedBy = "elementsInProduct")
     private Set<Product> productsWithElement = new HashSet<>();
+
+    public String getDepartmentTitle() {
+        return department.getTitle();
+    }
 }

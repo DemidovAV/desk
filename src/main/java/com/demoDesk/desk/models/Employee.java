@@ -32,4 +32,8 @@ public class Employee {
 
     @Column(name = "status")
     private EmployeeStatus status;
+
+    public String getDepartmentTitle() {
+        return department.getTitle();
+    }
 }

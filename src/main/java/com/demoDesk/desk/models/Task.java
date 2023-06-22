@@ -36,4 +36,12 @@ public class Task {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
+    public String getExecutorName() {
+        return executor.getName();
+    }
+
+    public String getTicketTitle() {
+        return  ticket.getTitle();
+    }
+
 }
