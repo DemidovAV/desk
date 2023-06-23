@@ -5,7 +5,8 @@ CREATE TABLE products (
     description varchar);
 
 INSERT INTO products (art, title, description)
-VALUES ('pA001', 'ProductA', 'product'), ('pB001', 'ProductB', 'product');
+VALUES ('pA001', 'ProductA', 'product'),
+       ('pB001', 'ProductB', 'product');
 
 CREATE TABLE elements (
     id serial PRIMARY KEY,
@@ -15,8 +16,10 @@ CREATE TABLE elements (
     description varchar);
 
 INSERT INTO elements (art, title, department_id, description)
-VALUES ('el0001','Element1', 1, 'just element 1'), ('el0002','Element2', 1, 'just element 2'), ('el0003','Element3', 2, 'just element 3'),
-('el0004','Element4', 2, 'just element 4');
+VALUES ('el0001','Element1', 1, 'just element 1'),
+       ('el0002','Element2', 1, 'just element 2'),
+       ('el0003','Element3', 2, 'just element 3'),
+       ('el0004','Element4', 2, 'just element 4');
 
 CREATE TABLE products_elements (
     product_id int references  products,

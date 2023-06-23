@@ -151,7 +151,7 @@ public class TicketController {
 
     //Подтверждение создания тикета
     @PostMapping("/createTicket/confirm")
-    public String createConfirm(@ModelAttribute(value="product") Ticket ticket) {
+    public String createConfirm(@ModelAttribute(value="ticket") Ticket ticket) {
         ticketService.saveTicket(ticket);
         return "created-ticket";
     }
