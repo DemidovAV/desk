@@ -1,4 +1,4 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.nomenclature;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

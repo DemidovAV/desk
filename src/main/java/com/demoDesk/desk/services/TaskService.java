@@ -1,10 +1,8 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Task;
-import com.demoDesk.desk.models.Ticket;
+import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.TaskRepository;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
-import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

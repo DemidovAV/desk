@@ -1,6 +1,7 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.personel;
 
 import com.demoDesk.desk.models.Enums.EmployeeStatus;
+import com.demoDesk.desk.models.queries.Task;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

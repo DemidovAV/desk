@@ -1,6 +1,6 @@
 package com.demoDesk.desk.repositories;
 
-import com.demoDesk.desk.models.Task;
+import com.demoDesk.desk.models.queries.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

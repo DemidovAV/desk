@@ -1,6 +1,7 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.dto.productDto.ShowProducts;
+import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/products")
 public class ProductsController {
     private ProductService productService;
@@ -21,37 +22,41 @@ public class ProductsController {
         this.productService = productService;
     }
 
-    @GetMapping
-    public String showProducts(Model model,
-                               @RequestParam(value = "filter", required = false) String filter) {
-        Product product = new Product();
+    private Specification<Product> filtration(String filter, String art) {
         Specification<Product> spec = Specification.where(null);
 
         if(filter != null) {
             spec = spec.and(ProductSpec.titleContains(filter));
         }
-        List<Product> filteredProducts = productService.getProductsWithFiltering(spec);
+        if (art != null) {
+            spec = spec.and(ProductSpec.artContains(art));
+        }
+        return spec;
 
-        model.addAttribute("product", product);
-        model.addAttribute("products", filteredProducts);
-        model.addAttribute("filter", filter);
-        return "products";
+    }
+
+    @GetMapping
+    public ShowProducts showProducts(@RequestParam(value = "filter", required = false) String filter,
+                                     @RequestParam(value = "art", required = false) String art) {
+        ShowProducts showProducts = new ShowProducts();
+        showProducts.setProducts(productService.getProductsWithFiltering(filtration(filter, art)));
+        showProducts.setFilter(filter);
+        showProducts.setArt(art);
+
+        return showProducts;
     }
 
     @PostMapping("/reset")
-    public String showProductListReset(Model model) {
-        Product product = new Product();
-        String filter = null;
-        model.addAttribute("products", productService.getAllProducts());
-        model.addAttribute("product", product);
-        model.addAttribute("filter", filter);
-        return "redirect:/products";
+    public ShowProducts showProductListReset() {
+        ShowProducts showProducts = new ShowProducts();
+        showProducts.setProducts(productService.getAllProducts());
+        showProducts.setFilter(null);
+        showProducts.setFilter(null);
+        return showProducts;
     }
     @GetMapping("/editProduct/{id}")
-    public String showEditProduct(Model model, @PathVariable(value="id") Long id){
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        return "edit-product";
+    public Product showEditProduct(@PathVariable(value="id") Long id){
+        return productService.getProductById(id);
     }
 
     @PostMapping("/editProduct/confirm")
@@ -62,29 +67,25 @@ public class ProductsController {
 
 
     @GetMapping("/addProduct")
-    public String addProduct(Model model) {
-        Product product = new Product();
-        model.addAttribute("product", product);
-        return "add-product";
+    public Product addProduct() {
+        return new Product();
     }
 
     @PostMapping("/addProduct/confirm")
-    public String addConfirm(@ModelAttribute(value="product") Product product) {
+    public boolean addConfirm(@ModelAttribute(value="product") Product product) {
         productService.saveProduct(product);
-        return "redirect:/products";
+        return true;
     }
 
     @GetMapping("/showProduct/{id}")
-    public String showOneProduct(Model model, @PathVariable(value="id") Long id) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        return "show-product";
+    public Product showOneProduct(@PathVariable(value="id") Long id) {
+        return productService.getProductById(id);
     }
 
     @GetMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable(value="id") Long id) {
+    public boolean deleteProduct(@PathVariable(value="id") Long id) {
         productService.deleteById(id);
-        return "redirect:/products";
+        return true;
     }
 
 }

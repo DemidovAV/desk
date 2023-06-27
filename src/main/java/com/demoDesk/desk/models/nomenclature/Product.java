@@ -1,10 +1,10 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.nomenclature;
 
+import com.demoDesk.desk.models.nomenclature.Element;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -40,6 +40,4 @@ public class Product {
     )
     private Set<Element> elementsInProduct = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")
-    private List<Ticket> tickets;
 }

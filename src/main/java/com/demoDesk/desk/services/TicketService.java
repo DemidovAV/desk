@@ -1,7 +1,6 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Product;
-import com.demoDesk.desk.models.Ticket;
+import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.TaskRepository;

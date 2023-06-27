@@ -1,8 +1,8 @@
 package com.demoDesk.desk.controllers;
 
 
-import com.demoDesk.desk.models.Product;
-import com.demoDesk.desk.models.Ticket;
+import com.demoDesk.desk.dto.productDto.ProductElementInfo;
+import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import com.demoDesk.desk.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,12 @@ public class TicketController {
     @GetMapping
     public String showTickets(Model model,
                               @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
             spec = spec.and(TicketSpec.titleContains(filter));
         }
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
-        model.addAttribute("ticket", ticket);
         model.addAttribute("tickets", filteredTickets);
         model.addAttribute("filter", filter);
         return "tickets";
@@ -45,7 +43,6 @@ public class TicketController {
     @PostMapping("/sortByExpirationDate")
     public String sortByExpirationDate(Model model,
                                        @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
@@ -53,7 +50,6 @@ public class TicketController {
         }
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
         List<Ticket> sortedTickets = ticketService.sortTicketsByExpirationDate(filteredTickets);
-        model.addAttribute("ticket", ticket);
         model.addAttribute("tickets", sortedTickets);
         model.addAttribute("filter", filter);
         return "tickets";
@@ -63,7 +59,6 @@ public class TicketController {
     @PostMapping("/sortByCreationDate")
     public String sortByCreationDate(Model model,
                                        @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
@@ -71,7 +66,6 @@ public class TicketController {
         }
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
         List<Ticket> sortedTickets = ticketService.sortTicketsByCreationDate(filteredTickets);
-        model.addAttribute("ticket", ticket);
         model.addAttribute("tickets", sortedTickets);
         model.addAttribute("filter", filter);
         return "tickets";
@@ -81,7 +75,6 @@ public class TicketController {
     @PostMapping("/sortByCloseDate")
     public String sortByCloseDate(Model model,
                                      @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
@@ -89,7 +82,6 @@ public class TicketController {
         }
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
         List<Ticket> sortedTickets = ticketService.sortTicketsByCloseDate(filteredTickets);
-        model.addAttribute("ticket", ticket);
         model.addAttribute("tickets", sortedTickets);
         model.addAttribute("filter", filter);
         return "tickets";
@@ -99,7 +91,6 @@ public class TicketController {
     @PostMapping("/sortByStatus")
     public String sortByStatus(Model model,
                                   @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
@@ -107,7 +98,6 @@ public class TicketController {
         }
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
         List<Ticket> sortedTickets = ticketService.sortTicketsByStatus(filteredTickets);
-        model.addAttribute("ticket", ticket);
         model.addAttribute("tickets", sortedTickets);
         model.addAttribute("filter", filter);
         return "tickets";
@@ -143,10 +133,21 @@ public class TicketController {
     }
 
     //Создание нового тикета
-    @GetMapping("/createTicket")
-    public String createNewTicket(Model model) {
+    @PostMapping("/createTicket")
+    public boolean createNewTicket(@RequestBody Ticket ticket) {
+        ticketService.saveTicket(ticket);
+        return true;
+    }
 
-        return "creation-ticket";
+    @GetMapping("/createTicket")
+    public ResponseCreareTicket createNewTicket() {
+        ticketService.saveTicket(ticket);
+        return ;
+    }
+    @GetMapping("/productElementInfo")
+    public List<ProductElementInfo> createNewTicket(@RequestParam("productId") Long productId {
+
+
     }
 
     //Подтверждение создания тикета

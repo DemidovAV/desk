@@ -1,10 +1,8 @@
 package com.demoDesk.desk.repositories;
 
-import com.demoDesk.desk.models.Element;
-import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.models.nomenclature.Element;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 

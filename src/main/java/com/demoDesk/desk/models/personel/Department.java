@@ -1,5 +1,6 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.personel;
 
+import com.demoDesk.desk.models.nomenclature.Element;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

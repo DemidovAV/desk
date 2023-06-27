@@ -1,7 +1,9 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.queries;
 
 import com.demoDesk.desk.models.Enums.Priority;
 import com.demoDesk.desk.models.Enums.RequestStatus;
+import com.demoDesk.desk.models.personel.Employee;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +26,7 @@ public class Task {
     private Employee executor;
 
     @Column(name = "expiration_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp expirationDate;
 
     @Column(name = "priority")
@@ -32,16 +35,14 @@ public class Task {
     @Column(name = "status")
     private RequestStatus requestStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+
+    @Column(name = "ticket_id")
+    private Long ticketId;
 
     public String getExecutorName() {
         return executor.getName();
     }
 
-    public String getTicketTitle() {
-        return  ticket.getTitle();
-    }
+
 
 }

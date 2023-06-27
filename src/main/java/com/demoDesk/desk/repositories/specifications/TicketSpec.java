@@ -1,6 +1,6 @@
 package com.demoDesk.desk.repositories.specifications;
 
-import com.demoDesk.desk.models.Ticket;
+import com.demoDesk.desk.models.queries.Ticket;
 import org.springframework.data.jpa.domain.Specification;
 
 public class TicketSpec {

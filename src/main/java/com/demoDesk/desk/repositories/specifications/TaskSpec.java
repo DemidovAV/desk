@@ -1,7 +1,6 @@
 package com.demoDesk.desk.repositories.specifications;
 
-import com.demoDesk.desk.models.Department;
-import com.demoDesk.desk.models.Task;
+import com.demoDesk.desk.models.queries.Task;
 import org.springframework.data.jpa.domain.Specification;
 
 public class TaskSpec {

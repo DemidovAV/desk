@@ -1,13 +1,9 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Department;
-import com.demoDesk.desk.models.Element;
-import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.ElementRepository;
-import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
-import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

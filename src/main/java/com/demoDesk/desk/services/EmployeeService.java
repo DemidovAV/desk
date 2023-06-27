@@ -1,9 +1,7 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Element;
-import com.demoDesk.desk.models.Employee;
+import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.repositories.EmployeeRepository;
-import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;

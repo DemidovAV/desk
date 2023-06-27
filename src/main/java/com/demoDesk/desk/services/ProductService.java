@@ -1,6 +1,6 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.demoDesk.desk.repositories;
 
-import com.demoDesk.desk.models.Department;
+import com.demoDesk.desk.models.personel.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

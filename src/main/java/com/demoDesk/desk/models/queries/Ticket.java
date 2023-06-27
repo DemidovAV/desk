@@ -1,7 +1,10 @@
-package com.demoDesk.desk.models;
+package com.demoDesk.desk.models.queries;
 
 import com.demoDesk.desk.models.Enums.Priority;
 import com.demoDesk.desk.models.Enums.RequestStatus;
+import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.models.queries.Task;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,9 +27,11 @@ public class Ticket {
     private String title;
 
     @Column(name = "creation_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp creationDate;
 
     @Column(name = "close_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp closeDate;
 
     @Column(name = "status")
@@ -43,6 +48,7 @@ public class Ticket {
     private Priority priority;
 
     @Column(name = "expiration_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp expirationDate;
 
     @Column(name = "comment")

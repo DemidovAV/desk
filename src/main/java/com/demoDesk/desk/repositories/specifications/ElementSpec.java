@@ -1,7 +1,6 @@
 package com.demoDesk.desk.repositories.specifications;
 
-import com.demoDesk.desk.models.Element;
-import com.demoDesk.desk.models.Product;
+import com.demoDesk.desk.models.nomenclature.Element;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ElementSpec {

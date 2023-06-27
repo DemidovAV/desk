@@ -1,10 +1,8 @@
 package com.demoDesk.desk.services;
 
-import com.demoDesk.desk.models.Department;
-import com.demoDesk.desk.models.Employee;
+import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
-import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

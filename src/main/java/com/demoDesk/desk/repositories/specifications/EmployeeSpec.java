@@ -1,7 +1,7 @@
 package com.demoDesk.desk.repositories.specifications;
 
 
-import com.demoDesk.desk.models.Employee;
+import com.demoDesk.desk.models.personel.Employee;
 import org.springframework.data.jpa.domain.Specification;
 
 public class EmployeeSpec {

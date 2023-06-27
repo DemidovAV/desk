@@ -2,8 +2,8 @@ package com.demoDesk.desk.models.Enums;
 
 public enum RequestStatus {
     IN_PROGRESS ("Выполняется"),
-    CANCELED ("Отмена"),
-    COMPLETE ("Выполнено");
+    COMPLETE ("Выполнено"),
+    CANCELED ("Отмена");
 
     private final String title;
     RequestStatus(String title) {
