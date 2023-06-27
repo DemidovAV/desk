@@ -1,6 +1,7 @@
 package com.demoDesk.desk.models.personel;
 
 import com.demoDesk.desk.models.nomenclature.Element;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,9 +25,11 @@ public class Department {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Element> elements;
 }

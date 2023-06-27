@@ -2,8 +2,12 @@ package com.demoDesk.desk.controllers;
 
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
+import com.demoDesk.desk.dto.ticketDto.ResponseCreateTicket;
+import com.demoDesk.desk.dto.ticketDto.ShowTickets;
+import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
+import com.demoDesk.desk.services.ProductService;
 import com.demoDesk.desk.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/ticket")
+@RestController
+@RequestMapping("/tickets")
 public class TicketController {
 
     private TicketService ticketService;
@@ -24,137 +28,112 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    //Показывает страницу со списком уже существующих тикетов
-    @GetMapping
-    public String showTickets(Model model,
-                              @RequestParam(value = "filter", required = false) String filter){
+    private Specification<Ticket> spec(String filter) {
         Specification<Ticket> spec = Specification.where(null);
 
         if(filter != null) {
             spec = spec.and(TicketSpec.titleContains(filter));
         }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
-        model.addAttribute("tickets", filteredTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        return spec;
+    }
+
+    //Показывает страницу со списком уже существующих тикетов
+    @GetMapping
+    public ShowTickets showTickets(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        showTickets.setTickets(ticketService.getTicketsWithFiltering(spec(filter)));
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сортируем отфильтрованные тикеты по дате дедлайна
     @PostMapping("/sortByExpirationDate")
-    public String sortByExpirationDate(Model model,
-                                       @RequestParam(value = "filter", required = false) String filter){
-        Specification<Ticket> spec = Specification.where(null);
-
-        if(filter != null) {
-            spec = spec.and(TicketSpec.titleContains(filter));
-        }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
+    public ShowTickets sortByExpirationDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByExpirationDate(filteredTickets);
-        model.addAttribute("tickets", sortedTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        showTickets.setTickets(sortedTickets);
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сортируем отфильтрованные тикеты по дате создания
     @PostMapping("/sortByCreationDate")
-    public String sortByCreationDate(Model model,
-                                       @RequestParam(value = "filter", required = false) String filter){
-        Specification<Ticket> spec = Specification.where(null);
-
-        if(filter != null) {
-            spec = spec.and(TicketSpec.titleContains(filter));
-        }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
+    public ShowTickets sortByCreationDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByCreationDate(filteredTickets);
-        model.addAttribute("tickets", sortedTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        showTickets.setTickets(sortedTickets);
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сортируем отфильтрованные тикеты по дате закрытия тикета
     @PostMapping("/sortByCloseDate")
-    public String sortByCloseDate(Model model,
-                                     @RequestParam(value = "filter", required = false) String filter){
-        Specification<Ticket> spec = Specification.where(null);
-
-        if(filter != null) {
-            spec = spec.and(TicketSpec.titleContains(filter));
-        }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
+    public ShowTickets sortByCloseDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByCloseDate(filteredTickets);
-        model.addAttribute("tickets", sortedTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        showTickets.setTickets(sortedTickets);
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сортируем отфильтрованные тикеты по статусу
     @PostMapping("/sortByStatus")
-    public String sortByStatus(Model model,
-                                  @RequestParam(value = "filter", required = false) String filter){
-        Specification<Ticket> spec = Specification.where(null);
-
-        if(filter != null) {
-            spec = spec.and(TicketSpec.titleContains(filter));
-        }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
+    public ShowTickets sortByStatus(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByStatus(filteredTickets);
-        model.addAttribute("tickets", sortedTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        showTickets.setTickets(sortedTickets);
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сортируем отфильтрованные тикеты по приоритету
     @PostMapping("/sortByPriority")
-    public String sortByPriority(Model model,
-                                  @RequestParam(value = "filter", required = false) String filter){
-        Ticket ticket = new Ticket();
-        Specification<Ticket> spec = Specification.where(null);
-
-        if(filter != null) {
-            spec = spec.and(TicketSpec.titleContains(filter));
-        }
-        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec);
+    public ShowTickets sortByPriority(@RequestParam(value = "filter", required = false) String filter){
+        ShowTickets showTickets = new ShowTickets();
+        List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByPriority(filteredTickets);
-        model.addAttribute("ticket", ticket);
-        model.addAttribute("tickets", sortedTickets);
-        model.addAttribute("filter", filter);
-        return "tickets";
+        showTickets.setTickets(sortedTickets);
+        showTickets.setFilter(filter);
+        return showTickets;
     }
 
     //Сброс фильтров
     @PostMapping("/reset")
-    public String resetShowTickets(Model model) {
-        Ticket ticket = new Ticket();
-        String filter = null;
-        model.addAttribute("tickets", ticketService.getAllTickets());
-        model.addAttribute("ticket", ticket);
-        model.addAttribute("filter", filter);
-        return "redirect:/tickets";
+    public ShowTickets resetShowTickets(Model model) {
+        ShowTickets showTickets = new ShowTickets();
+        showTickets.setTickets(ticketService.getAllTickets());
+        showTickets.setFilter(null);
+        return showTickets;
     }
 
     //Создание нового тикета
-    @PostMapping("/createTicket")
-    public boolean createNewTicket(@RequestBody Ticket ticket) {
-        ticketService.saveTicket(ticket);
-        return true;
-    }
+//    @PostMapping("/createTicket/confirm")
+//    public boolean createNewTicket(@RequestBody Ticket ticket) {
+//        ticketService.saveTicket(ticket);
+//        return true;
+//    }
 
     @GetMapping("/createTicket")
-    public ResponseCreareTicket createNewTicket() {
-        ticketService.saveTicket(ticket);
-        return ;
+    public List<Product> createNewTicket() {
+        return ticketService.getProductsList();
     }
-    @GetMapping("/productElementInfo")
-    public List<ProductElementInfo> createNewTicket(@RequestParam("productId") Long productId {
 
-
-    }
+//    public ResponseCreateTicket responseCreateTicket()
+//    @GetMapping("/productElementInfo")
+//    public List<ProductElementInfo> createNewTicket(@RequestParam("productId") Long productId {
+//
+//
+//    }
 
     //Подтверждение создания тикета
     @PostMapping("/createTicket/confirm")
-    public String createConfirm(@ModelAttribute(value="ticket") Ticket ticket) {
+    public boolean createConfirm(@ModelAttribute(value="ticket") Ticket ticket) {
         ticketService.saveTicket(ticket);
-        return "created-ticket";
+        return true;
     }
 
     //Просмотр отдельного тикета

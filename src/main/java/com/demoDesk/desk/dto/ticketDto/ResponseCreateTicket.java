@@ -1,4 +1,4 @@
-package com.demoDesk.desk.dto;
+package com.demoDesk.desk.dto.ticketDto;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import lombok.Data;

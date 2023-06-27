@@ -5,6 +5,7 @@ import com.demoDesk.desk.models.Enums.RequestStatus;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Task;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,6 +40,7 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     @Column(name = "quantity")
@@ -54,7 +56,8 @@ public class Ticket {
     @Column(name = "comment")
     private String comment;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticketId")
+    @JsonIgnore
     private List<Task> tasks;
 
     public String getProductTitle() {

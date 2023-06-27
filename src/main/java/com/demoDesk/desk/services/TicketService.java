@@ -1,5 +1,6 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
@@ -58,6 +59,8 @@ public class TicketService {
     public void saveTicket(Ticket ticket) {
         ticketRepository.save(ticket);
     }
+
+    public List<Product> getProductsList(){return productRepository.findAll();}
 
     public List<Ticket> sortTicketsByCreationDate (List<Ticket> tickets){
         return tickets.stream().sorted(Comparator.comparing(Ticket::getCreationDate)).collect(Collectors.toList());

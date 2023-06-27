@@ -1,6 +1,7 @@
 package com.demoDesk.desk.models.nomenclature;
 
 import com.demoDesk.desk.models.nomenclature.Element;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,6 +39,7 @@ public class Product {
             @JoinColumn(name = "element_id", referencedColumnName = "id")
         }
     )
+    @JsonIgnore
     private Set<Element> elementsInProduct = new HashSet<>();
 
 }

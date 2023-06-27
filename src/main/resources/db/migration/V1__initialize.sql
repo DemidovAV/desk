@@ -1,3 +1,12 @@
+CREATE TABLE departments (
+    id serial PRIMARY KEY,
+    title varchar,
+    description varchar);
+
+INSERT INTO departments (title, description)
+VALUES ('Department of 3D printing', 'we print some stuff here'),
+       ('Department of turning machine', 'we make some metal stuff here');
+
 CREATE TABLE products (
     id serial PRIMARY KEY,
     art varchar(100),
@@ -39,6 +48,12 @@ CREATE TABLE tickets (
     expiration_date timestamp,
     comment varchar);
 
+CREATE TABLE employees (
+    id serial PRIMARY KEY,
+    name varchar,
+    department_id int references departments,
+    status varchar);
+
 CREATE TABLE tasks (
     id serial PRIMARY KEY,
     executor_id int references employees,
@@ -47,14 +62,5 @@ CREATE TABLE tasks (
     status varchar,
     ticket_id int references tickets);
 
-CREATE TABLE departments (
-    id serial PRIMARY KEY,
-    title varchar,
-    description varchar);
 
-CREATE TABLE employees (
-    id serial PRIMARY KEY,
-    name varchar,
-    department_id int references departments,
-    status varchar);
 
