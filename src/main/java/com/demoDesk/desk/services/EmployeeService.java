@@ -1,6 +1,7 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,15 @@ import java.util.List;
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
+    private DepartmentRepository departmentRepository;
+
     @Autowired
     public void setEmployeeRepository(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+    }
+    @Autowired
+    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
     public List<Employee> getEmployeesWithFiltering(Specification<Employee> specification) {
