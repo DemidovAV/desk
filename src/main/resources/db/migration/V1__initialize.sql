@@ -36,6 +36,16 @@ CREATE TABLE products_elements (
     element_quantity int,
     primary key (product_id, element_id));
 
+INSERT INTO products_elements (product_id, element_id, element_quantity)
+VALUES (1, 1, 4),
+        (1, 2, 3),
+        (1, 3, 2),
+        (2, 1, 5),
+        (2, 2, 6),
+        (2, 4, 8),
+        (2, 3, 9);
+
+
 CREATE TABLE tickets (
     id serial PRIMARY KEY,
     title varchar,
@@ -53,6 +63,12 @@ CREATE TABLE employees (
     name varchar,
     department_id int references departments,
     status varchar);
+
+INSERT INTO employees (name, department_id, status)
+VALUES ('Mihail', 1, 'Workable'),
+       ('Aleksey', 2, 'Workable'),
+       ('Vasya', 2, 'Ill'),
+       ('Elena', 1, 'Workable');
 
 CREATE TABLE tasks (
     id serial PRIMARY KEY,
