@@ -1,6 +1,8 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,14 @@ import java.util.List;
 
 @Service
 public class ProductService {
+
+    private ElementRepository elementRepository;
     private ProductRepository productRepository;
+
+    @Autowired
+    public void setElementRepository(ElementRepository elementRepository) {
+        this.elementRepository = elementRepository;
+    }
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
@@ -40,6 +49,10 @@ public class ProductService {
     @Transactional
     public void saveProduct(Product product) {
         productRepository.save(product);
+    }
+
+    public List<Element> getAllElements() {
+        return elementRepository.findAll();
     }
 
 

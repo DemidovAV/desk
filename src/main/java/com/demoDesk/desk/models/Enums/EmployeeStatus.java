@@ -1,9 +1,9 @@
 package com.demoDesk.desk.models.Enums;
 
 public enum EmployeeStatus {
-    VACATION("Отпуск"),
-    ILL("Больничный"),
-    WORKING("Трудоспособен");
+    VACATION("Vacation"),
+    ILL("Ill"),
+    WORKING("Workable");
 
     private final String title;
     EmployeeStatus(String title) {

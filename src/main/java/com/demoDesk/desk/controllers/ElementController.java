@@ -3,6 +3,8 @@ package com.demoDesk.desk.controllers;
 import com.demoDesk.desk.dto.elementDto.ShowElements;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ElementService;
@@ -69,8 +71,8 @@ public class ElementController {
 
 
     @GetMapping("/addElement")
-    public Element addElement(Model model) {
-        return new Element();
+    public List<Department> addNewElement() {
+        return elementService.getAllDepartments();
     }
     //
     @PostMapping("/addElement/confirm")

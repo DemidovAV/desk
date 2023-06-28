@@ -1,6 +1,7 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.productDto.ShowProducts;
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ProductService;
@@ -67,8 +68,8 @@ public class ProductsController {
 
 
     @GetMapping("/addProduct")
-    public Product addProduct() {
-        return new Product();
+    public List<Element> addProduct() {
+        return productService.getAllElements();
     }
 
     @PostMapping("/addProduct/confirm")
