@@ -61,7 +61,7 @@ public class ProductsController {
     }
 
     @PostMapping("/editProduct/confirm")
-    public String editConfirm(@ModelAttribute(value="product") Product product) {
+    public String editConfirm(@RequestBody Product product) {
         productService.saveProduct(product);
         return "redirect:/products";
     }
@@ -73,7 +73,7 @@ public class ProductsController {
     }
 
     @PostMapping("/addProduct/confirm")
-    public boolean addConfirm(@ModelAttribute(value="product") Product product) {
+    public boolean addConfirm(@RequestBody Product product) {
         productService.saveProduct(product);
         return true;
     }

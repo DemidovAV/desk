@@ -36,7 +36,8 @@ public class ElementService {
 
     @Transactional(readOnly = true)
     public Element getElementById(Long id) {
-        return elementRepository.findOne(ElementSpec.findById(id)).orElse(null);
+        Element element= elementRepository.findOne(ElementSpec.findById(id)).orElse(null);
+        return element;
     }
 
     @Transactional

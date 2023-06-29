@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+//Сущность объединяет изделия и компоненты, хранит информацию о количестве компонентов в конкретном изделии
 @Entity
 @Table(name = "products_elements")
 @NoArgsConstructor

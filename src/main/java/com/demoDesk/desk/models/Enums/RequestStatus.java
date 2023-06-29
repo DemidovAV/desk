@@ -1,5 +1,5 @@
 package com.demoDesk.desk.models.Enums;
-
+//Статус тасков - выполняется, выполнено, отменено
 public enum RequestStatus {
     IN_PROGRESS ("Выполняется"),
     COMPLETE ("Выполнено"),

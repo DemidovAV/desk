@@ -1,5 +1,6 @@
 package com.demoDesk.desk.models.Enums;
 
+//Приоритет выполнения тикетов и тасков
 public enum Priority {
     HIGH(1),
     MEDIUM(2),

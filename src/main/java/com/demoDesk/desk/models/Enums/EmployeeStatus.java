@@ -1,5 +1,5 @@
 package com.demoDesk.desk.models.Enums;
-
+// Статус работника: отпуск, больничный, работает
 public enum EmployeeStatus {
     VACATION("Vacation"),
     ILL("Ill"),

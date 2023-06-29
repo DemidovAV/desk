@@ -31,10 +31,11 @@ VALUES ('el0001','Element1', 1, 'just element 1'),
        ('el0004','Element4', 2, 'just element 4');
 
 CREATE TABLE products_elements (
+    id serial PRIMARY KEY,
     product_id int references  products,
     element_id int references elements,
-    element_quantity int,
-    primary key (product_id, element_id));
+    element_quantity int
+    );
 
 INSERT INTO products_elements (product_id, element_id, element_quantity)
 VALUES (1, 1, 4),

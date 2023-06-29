@@ -2,15 +2,11 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.elementDto.ShowElements;
 import com.demoDesk.desk.models.nomenclature.Element;
-import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.personel.Department;
-import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
-import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ElementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,7 +60,7 @@ public class ElementController {
     }
 
     @PostMapping("/editElement/confirm")
-    public boolean editElementConfirm(@ModelAttribute(value="element") Element element) {
+    public boolean editElementConfirm(@RequestBody Element element) {
         elementService.saveElement(element);
         return true;
     }
@@ -76,7 +72,7 @@ public class ElementController {
     }
     //
     @PostMapping("/addElement/confirm")
-    public boolean addElementConfirm(@ModelAttribute(value="element") Element element) {
+    public boolean addElementConfirm(@RequestBody Element element) {
         elementService.saveElement(element);
         return true;
     }

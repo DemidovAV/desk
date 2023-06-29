@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
+//Изделие, состоит из компонентов
 @Entity
 @Table(name = "products")
 @NoArgsConstructor

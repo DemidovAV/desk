@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-
+//Отдел, указывает кто здесь работает
 @Entity
 @Table(name = "departments")
 @Data
