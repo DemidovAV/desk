@@ -35,7 +35,7 @@ public class Element {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "elementsInProduct", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "elementsInProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Product> productsWithElement = new HashSet<>();
 

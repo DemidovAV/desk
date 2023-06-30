@@ -1,5 +1,6 @@
 package com.demoDesk.desk.controllers;
 
+import com.demoDesk.desk.dto.productDto.ProductTransferEntity;
 import com.demoDesk.desk.dto.productDto.ShowProducts;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
@@ -7,9 +8,8 @@ import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 
@@ -79,11 +79,12 @@ public class ProductsController {
     }
 
     @GetMapping("/showProduct/{id}")
-    public Product showOneProduct(@PathVariable(value="id") Long id) {
-        return productService.getProductById(id);
+    public ProductTransferEntity showOneProduct(@PathVariable(value="id") Long id) {
+        Product product = productService.getProductById(id);
+        return productService.getProductTransferEntity(product);
     }
 
-    @GetMapping("/deleteProduct/{id}")
+    @DeleteMapping ("/deleteProduct/{id}")
     public boolean deleteProduct(@PathVariable(value="id") Long id) {
         productService.deleteById(id);
         return true;

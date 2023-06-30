@@ -1,8 +1,10 @@
 package com.demoDesk.desk.dto.productDto;
 
 
-import java.util.List;
+import lombok.Data;
 
+import java.util.List;
+@Data
 public class ProductTransferEntity {
 
     private Long id;
@@ -14,4 +16,5 @@ public class ProductTransferEntity {
     private String description;
 
     private List<ProductElementInfo> productElementInfoList;
+
 }

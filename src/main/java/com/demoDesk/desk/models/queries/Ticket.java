@@ -56,7 +56,7 @@ public class Ticket {
     @Column(name = "comment")
     private String comment;
 
-    @OneToMany(mappedBy = "ticketId")
+    @OneToMany(mappedBy = "ticketId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Task> tasks;
 
