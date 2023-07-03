@@ -39,6 +39,7 @@ public class Product {
             @JoinColumn(name = "element_id", referencedColumnName = "id")
         }
     )
+    @JsonIgnore
 
     private Set<Element> elementsInProduct = new HashSet<>();
 

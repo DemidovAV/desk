@@ -1,5 +1,6 @@
 package com.demoDesk.desk.models.nomenclature;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "products_elements")
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 public class ProductsElements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

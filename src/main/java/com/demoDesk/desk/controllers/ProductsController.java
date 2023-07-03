@@ -56,14 +56,15 @@ public class ProductsController {
         return showProducts;
     }
     @GetMapping("/editProduct/{id}")
-    public Product showEditProduct(@PathVariable(value="id") Long id){
-        return productService.getProductById(id);
+    public ProductTransferEntity showEditProduct(@PathVariable(value="id") Long id){
+        Product product = productService.getProductById(id);
+        return productService.getProductTransferEntity(product);
     }
 
     @PostMapping("/editProduct/confirm")
-    public String editConfirm(@RequestBody Product product) {
-        productService.saveProduct(product);
-        return "redirect:/products";
+    public boolean editConfirm(@RequestBody ProductTransferEntity productTransferEntity) {
+       productService.confirmProductEdit(productTransferEntity);
+       return true;
     }
 
 
@@ -73,8 +74,8 @@ public class ProductsController {
     }
 
     @PostMapping("/addProduct/confirm")
-    public boolean addConfirm(@RequestBody Product product) {
-        productService.saveProduct(product);
+    public boolean addConfirm(@RequestBody ProductTransferEntity product) {
+        productService.saveNewProduct(product);
         return true;
     }
 

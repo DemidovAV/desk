@@ -61,7 +61,12 @@ public class ElementController {
 
     @PostMapping("/editElement/confirm")
     public boolean editElementConfirm(@RequestBody Element element) {
-        elementService.saveElement(element);
+        Element editableElement = elementService.getElementById(element.getId());
+        editableElement.setArt(element.getArt());
+        editableElement.setDepartment(element.getDepartment());
+        editableElement.setTitle(element.getTitle());
+        editableElement.setDescription(element.getDescription());
+        elementService.saveElement(editableElement);
         return true;
     }
 
