@@ -141,9 +141,9 @@ public class TicketController {
 
     //Удалить выбранный тикет
     @GetMapping("/delete/{id}")
-    public String deleteTicket(@PathVariable(value = "id") Long id) {
+    public boolean deleteTicket(@PathVariable(value = "id") Long id) {
         ticketService.deleteTicketById(id);
-        return "redirect:/tickets";
+        return true;
     }
 
     //Редактировать выбранный тикет

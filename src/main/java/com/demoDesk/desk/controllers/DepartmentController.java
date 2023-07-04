@@ -44,7 +44,7 @@ public class DepartmentController {
     }
 
     @PostMapping("/editDepartment/confirm")
-    public boolean editElementConfirm(@ModelAttribute(value="department") Department department) {
+    public boolean editElementConfirm(@RequestBody Department department) {
         departmentService.saveElement(department);
         return true;
     }
@@ -56,7 +56,7 @@ public class DepartmentController {
     }
     //
     @PostMapping("/addDepartment/confirm")
-    public boolean addDepartmentConfirm(@ModelAttribute(value="department") Department department) {
+    public boolean addDepartmentConfirm(@RequestBody Department department) {
         departmentService.saveElement(department);
         return true;
     }

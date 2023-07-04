@@ -1,5 +1,6 @@
 package com.demoDesk.desk.controllers;
 
+import com.demoDesk.desk.dto.productDto.ProductEdit;
 import com.demoDesk.desk.dto.productDto.ProductTransferEntity;
 import com.demoDesk.desk.dto.productDto.ShowProducts;
 import com.demoDesk.desk.models.nomenclature.Element;
@@ -56,9 +57,12 @@ public class ProductsController {
         return showProducts;
     }
     @GetMapping("/editProduct/{id}")
-    public ProductTransferEntity showEditProduct(@PathVariable(value="id") Long id){
+    public ProductEdit showEditProduct(@PathVariable(value="id") Long id){
         Product product = productService.getProductById(id);
-        return productService.getProductTransferEntity(product);
+        ProductEdit productEdit = new ProductEdit();
+        productEdit.setProductTransfer(productService.getProductTransferEntity(product));
+        productEdit.setElements(productService.getAllElements());
+        return productEdit;
     }
 
     @PostMapping("/editProduct/confirm")
