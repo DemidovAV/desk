@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-public class ProductEdit {
+public class ProductEditTransferEntity {
     private ProductTransferEntity productTransfer;
     private List<Element> elements;
 }
