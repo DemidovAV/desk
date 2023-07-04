@@ -1,5 +1,7 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
+import com.demoDesk.desk.models.Enums.RequestStatus;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
@@ -12,6 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,6 +84,21 @@ public class TicketService {
 
     public List<Ticket> sortTicketsByPriority (List<Ticket> tickets){
         return tickets.stream().sorted(Comparator.comparing(Ticket::getPriority)).collect(Collectors.toList());
+    }
+
+    public void createNewTicket(TicketCreationDto creationDto) {
+        Ticket newTicket = new Ticket();
+        newTicket.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        newTicket.setComment(creationDto.getComment());
+        newTicket.setPriority(creationDto.getPriority());
+        newTicket.setExpirationDate(creationDto.getExpirationDate());
+        newTicket.setProduct(creationDto.getProduct());
+        newTicket.setQuantity(creationDto.getQuantity());
+        newTicket.setTitle(creationDto.getTitle());
+        newTicket.setRequestStatus(RequestStatus.IN_PROGRESS);
+        ticketRepository.save(newTicket);
+
+
     }
 
 }

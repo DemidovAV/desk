@@ -1,10 +1,12 @@
 package com.demoDesk.desk.controllers;
 
 
+import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.ticketDto.ShowTickets;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
+import com.demoDesk.desk.services.ProductService;
 import com.demoDesk.desk.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,10 +20,15 @@ import java.util.List;
 public class TicketController {
 
     private TicketService ticketService;
+    private ProductService productService;
 
     @Autowired
     public void setTicketService(TicketService ticketService) {
         this.ticketService = ticketService;
+    }
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
     private Specification<Ticket> spec(String filter) {
@@ -106,24 +113,16 @@ public class TicketController {
         return showTickets;
     }
 
-    //Создание нового тикета
-//    @PostMapping("/createTicket/confirm")
-//    public boolean createNewTicket(@RequestBody Ticket ticket) {
-//        ticketService.saveTicket(ticket);
-//        return true;
-//    }
 
     @GetMapping("/createTicket")
     public List<Product> createNewTicket() {
         return ticketService.getProductsList();
     }
 
-//    public ResponseCreateTicket responseCreateTicket()
-//    @GetMapping("/productElementInfo")
-//    public List<ProductElementInfo> createNewTicket(@RequestParam("productId") Long productId {
-//
-//
-//    }
+    @PostMapping("/createTicket/productChosen")
+    public List<ProductElementInfo> getElementsForProduct(@RequestBody Product product) {
+        return productService.getProductElementInfoList(product);
+    }
 
     //Подтверждение создания тикета
     @PostMapping("/createTicket/confirm")

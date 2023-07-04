@@ -50,7 +50,7 @@ public class Ticket {
     private Priority priority;
 
     @Column(name = "expiration_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Timestamp expirationDate;
 
     @Column(name = "comment")
