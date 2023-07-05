@@ -3,6 +3,7 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.ticketDto.ShowTickets;
+import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
@@ -113,29 +114,30 @@ public class TicketController {
         return showTickets;
     }
 
-
+    //создание тикета - отсылаем список изделий
     @GetMapping("/createTicket")
     public List<Product> createNewTicket() {
         return ticketService.getProductsList();
     }
 
+    //создание тикета - после выбора изделия отсылаем список его комплектующих
     @PostMapping("/createTicket/productChosen")
     public List<ProductElementInfo> getElementsForProduct(@RequestBody Product product) {
-        return productService.getProductElementInfoList(product);
+        Product searchProduct = productService.getProductById(product.getId());
+        return productService.getProductElementInfoList(searchProduct);
     }
 
-    //Подтверждение создания тикета
+    //Подтверждение создания тикета, сохраняем новый тикет в базе
     @PostMapping("/createTicket/confirm")
-    public boolean createConfirm(@ModelAttribute(value="ticket") Ticket ticket) {
-        ticketService.saveTicket(ticket);
+    public boolean createConfirm(@RequestBody TicketCreationDto creationDto) {
+        ticketService.createNewTicket(creationDto);
         return true;
     }
 
     //Просмотр отдельного тикета
-    @GetMapping("/show/{id}")
-    public String showTicket(Model model, @PathVariable(value = "id") Long id) {
-        model.addAttribute("ticket", ticketService.findById(id));
-        return "show-ticket";
+    @GetMapping("/showTicket/{id}")
+    public Ticket showTicket (@PathVariable(value = "id") Long id) {
+        return ticketService.findById(id);
     }
 
     //Удалить выбранный тикет

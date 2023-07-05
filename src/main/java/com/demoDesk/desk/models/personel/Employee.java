@@ -30,12 +30,12 @@ public class Employee {
     @JsonIgnore
     private Department department;
 
-    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> tasks;
-
-    @Column(name = "status")
-    private EmployeeStatus status;
+//
+//    @Column(name = "status")
+//    private EmployeeStatus status;
 
     public String getDepartmentTitle() {
         return department.getTitle();

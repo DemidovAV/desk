@@ -120,7 +120,9 @@ public class TicketService {
     }
 
     private Employee getEmployeeForTask(Element element) {
-        Department dep = element.getDepartment();
+        Element searchElement = elementRepository.findById(element.getId()).orElse(null);
+        assert searchElement != null;
+        Department dep = searchElement.getDepartment();
         List<Employee> employees = dep.getEmployees();
         Employee employeeForTask = employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
         return employeeForTask;

@@ -59,17 +59,20 @@ CREATE TABLE tickets (
     expiration_date timestamp,
     comment varchar);
 
+-- INSERT INTO tickets (title, creation_date, close_date, status, product_id, quantity, priority, expiration_date, comment)
+
+
 CREATE TABLE employees (
     id serial PRIMARY KEY,
     name varchar,
     department_id int references departments,
     status varchar);
 
-INSERT INTO employees (name, department_id, status)
-VALUES ('Mihail', 1, 'Workable'),
-       ('Aleksey', 2, 'Workable'),
-       ('Vasya', 2, 'Ill'),
-       ('Elena', 1, 'Workable');
+INSERT INTO employees (name, department_id)
+VALUES ('Mihail', 1),
+       ('Aleksey', 2),
+       ('Vasya', 2),
+       ('Elena', 1);
 
 CREATE TABLE tasks (
     id serial PRIMARY KEY,

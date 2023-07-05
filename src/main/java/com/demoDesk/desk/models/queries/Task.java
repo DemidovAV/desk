@@ -25,6 +25,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "executor_id")
+    @JsonIgnore
     private Employee executor;
 
     @Column(name = "expiration_date")
@@ -39,7 +40,9 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "element_id")
+    @JsonIgnore
     private Element element;
+    public String getElementTitle() {return element == null ? "" : element.getTitle();}
 
     @Column(name = "element_quantity")
     private Integer quantity;
@@ -48,9 +51,8 @@ public class Task {
     private Long ticketId;
 
     public String getExecutorName() {
-        return executor.getName();
+        return executor == null ? "" : executor.getName();
     }
-
 
 
 }
