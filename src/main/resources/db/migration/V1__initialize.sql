@@ -77,6 +77,8 @@ CREATE TABLE tasks (
     expiration_date timestamp,
     priority int,
     status varchar,
+    element_id int references elements,
+    element_quantity int,
     ticket_id int references tickets);
 
 

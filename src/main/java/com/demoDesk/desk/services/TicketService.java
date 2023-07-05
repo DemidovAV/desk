@@ -1,8 +1,14 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
 import com.demoDesk.desk.models.Enums.RequestStatus;
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.models.nomenclature.ProductsElements;
+import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
@@ -98,7 +104,26 @@ public class TicketService {
         newTicket.setRequestStatus(RequestStatus.IN_PROGRESS);
         ticketRepository.save(newTicket);
 
+        Ticket savedTicket = ticketRepository.findFirstByOrderByIdDesc();
 
+        List<ProductElementInfo> elements = creationDto.getProductElementInfos();
+        for(ProductElementInfo pei: elements) {
+            Task task = new Task();
+            task.setTicketId(savedTicket.getId());
+            task.setElement(pei.getElement());
+            task.setQuantity(pei.getCount());
+            task.setExpirationDate(creationDto.getExpirationDate());
+            task.setPriority(creationDto.getPriority());
+            task.setExecutor(getEmployeeForTask(pei.getElement()));
+            taskRepository.save(task);
+        }
+    }
+
+    private Employee getEmployeeForTask(Element element) {
+        Department dep = element.getDepartment();
+        List<Employee> employees = dep.getEmployees();
+        Employee employeeForTask = employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
+        return employeeForTask;
     }
 
 }

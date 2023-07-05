@@ -2,6 +2,7 @@ package com.demoDesk.desk.models.queries;
 
 import com.demoDesk.desk.models.Enums.Priority;
 import com.demoDesk.desk.models.Enums.RequestStatus;
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Employee;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,7 +29,6 @@ public class Task {
 
     @Column(name = "expiration_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    @JsonIgnore
     private Timestamp expirationDate;
 
     @Column(name = "priority")
@@ -37,6 +37,12 @@ public class Task {
     @Column(name = "status")
     private RequestStatus requestStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "element_id")
+    private Element element;
+
+    @Column(name = "element_quantity")
+    private Integer quantity;
 
     @Column(name = "ticket_id")
     private Long ticketId;
