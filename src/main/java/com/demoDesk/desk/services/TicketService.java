@@ -2,6 +2,7 @@ package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
+import com.demoDesk.desk.dto.ticketDto.TicketEditDto;
 import com.demoDesk.desk.models.Enums.RequestStatus;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -126,6 +128,18 @@ public class TicketService {
         List<Employee> employees = dep.getEmployees();
         Employee employeeForTask = employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
         return employeeForTask;
+    }
+
+    public void ticketEditExecute(TicketEditDto ticketEdit) {
+        Ticket ticket = findById(ticketEdit.getTicket().getId());
+        ticket.setTitle(ticketEdit.getTicket().getTitle());
+        ticket.setProduct(ticketEdit.getTicket().getProduct());
+        ticket.setQuantity(ticketEdit.getTicket().getQuantity());
+        ticket.setPriority(ticketEdit.getTicket().getPriority());
+        ticket.setExpirationDate(ticketEdit.getTicket().getExpirationDate());
+        ticket.setComment(ticketEdit.getTicket().getComment());
+        ticket.setRequestStatus(ticketEdit.getTicket().getRequestStatus());
+        ticketRepository.save(ticket);
     }
 
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-public class ProductTransferEntity {
+public class ProductTransferDto {
 
     private Long id;
 

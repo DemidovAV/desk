@@ -4,7 +4,9 @@ package com.demoDesk.desk.controllers;
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.ticketDto.ShowTickets;
 import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
+import com.demoDesk.desk.dto.ticketDto.TicketEditDto;
 import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import com.demoDesk.desk.services.ProductService;
@@ -141,7 +143,7 @@ public class TicketController {
     }
 
     //Удалить выбранный тикет
-    @GetMapping("/delete/{id}")
+    @DeleteMapping ("/delete/{id}")
     public boolean deleteTicket(@PathVariable(value = "id") Long id) {
         ticketService.deleteTicketById(id);
         return true;
@@ -149,10 +151,19 @@ public class TicketController {
 
     //Редактировать выбранный тикет
     @GetMapping("/edit/{id}")
-    public String editTicket(Model model, @PathVariable(value = "id") Long id) {
+    public TicketEditDto editTicket(@PathVariable(value = "id") Long id) {
         Ticket ticket = ticketService.findById(id);
-        model.addAttribute("ticket", ticket);
-        return "edit-ticket";
+        List<Task> tasks = ticket.getTasks();
+        TicketEditDto ticketEdit = new TicketEditDto();
+        ticketEdit.setTicket(ticket);
+        ticketEdit.setTaskList(tasks);
+        return ticketEdit;
+    }
+
+    @PostMapping("/edit/confirm")
+    public boolean ticketEditConfirm(@RequestBody TicketEditDto ticketEdit) {
+        ticketService.ticketEditExecute(ticketEdit);
+        return true;
     }
 
 }

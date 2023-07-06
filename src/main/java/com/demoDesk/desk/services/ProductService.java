@@ -1,7 +1,7 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
-import com.demoDesk.desk.dto.productDto.ProductTransferEntity;
+import com.demoDesk.desk.dto.productDto.ProductTransferDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.nomenclature.ProductsElements;
@@ -11,14 +11,12 @@ import com.demoDesk.desk.repositories.ProductsElementsRepository;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -79,23 +77,23 @@ public class ProductService {
         return productElementInfoList;
     }
 
-    public ProductTransferEntity getProductTransferEntity(Product product) {
-        ProductTransferEntity productTransferEntity = new ProductTransferEntity();
-        productTransferEntity.setId(product.getId());
-        productTransferEntity.setArt(product.getArt());
-        productTransferEntity.setTitle(product.getTitle());
-        productTransferEntity.setDescription(product.getDescription());
-        productTransferEntity.setProductElementInfoList(getProductElementInfoList(product));
-        return productTransferEntity;
+    public ProductTransferDto getProductTransferEntity(Product product) {
+        ProductTransferDto productTransferDto = new ProductTransferDto();
+        productTransferDto.setId(product.getId());
+        productTransferDto.setArt(product.getArt());
+        productTransferDto.setTitle(product.getTitle());
+        productTransferDto.setDescription(product.getDescription());
+        productTransferDto.setProductElementInfoList(getProductElementInfoList(product));
+        return productTransferDto;
     }
     @Transactional
-    public void confirmProductEdit (ProductTransferEntity productTransferEntity) {
-        Product savingProduct = getProductById(productTransferEntity.getId());
-        savingProduct.setArt(productTransferEntity.getArt());
-        savingProduct.setTitle(productTransferEntity.getTitle());
-        savingProduct.setDescription(productTransferEntity.getDescription());
+    public void confirmProductEdit (ProductTransferDto productTransferDto) {
+        Product savingProduct = getProductById(productTransferDto.getId());
+        savingProduct.setArt(productTransferDto.getArt());
+        savingProduct.setTitle(productTransferDto.getTitle());
+        savingProduct.setDescription(productTransferDto.getDescription());
         productRepository.save(savingProduct);
-        List<ProductElementInfo> productElementInfos = productTransferEntity.getProductElementInfoList();
+        List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
         for(ProductElementInfo pe:productElementInfos) {
             if(savingProduct.getElementsInProduct().contains(pe.getElement())) {
                 productsElementsRepository.saveEditedElementQuantityInProduct(
@@ -112,13 +110,13 @@ public class ProductService {
         }
     }
     @Transactional
-    public void saveNewProduct(ProductTransferEntity productTransferEntity) {
+    public void saveNewProduct(ProductTransferDto productTransferDto) {
         Product product = new Product();
-        product.setArt(productTransferEntity.getArt());
-        product.setTitle(productTransferEntity.getTitle());
-        product.setDescription(productTransferEntity.getDescription());
+        product.setArt(productTransferDto.getArt());
+        product.setTitle(productTransferDto.getTitle());
+        product.setDescription(productTransferDto.getDescription());
         productRepository.save(product);
-        List<ProductElementInfo> productElementInfos = productTransferEntity.getProductElementInfoList();
+        List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
         for(ProductElementInfo pei: productElementInfos) {
             ProductsElements productsElements = new ProductsElements();
             productsElements.setProductId(product.getId());

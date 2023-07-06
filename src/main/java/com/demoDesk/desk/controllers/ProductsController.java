@@ -1,7 +1,7 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.dto.productDto.ProductEditTransferEntity;
-import com.demoDesk.desk.dto.productDto.ProductTransferEntity;
+import com.demoDesk.desk.dto.productDto.ProductEditDto;
+import com.demoDesk.desk.dto.productDto.ProductTransferDto;
 import com.demoDesk.desk.dto.productDto.ShowProducts;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
@@ -57,17 +57,17 @@ public class ProductsController {
         return showProducts;
     }
     @GetMapping("/editProduct/{id}")
-    public ProductEditTransferEntity showEditProduct(@PathVariable(value="id") Long id){
+    public ProductEditDto showEditProduct(@PathVariable(value="id") Long id){
         Product product = productService.getProductById(id);
-        ProductEditTransferEntity productEditTransferEntity = new ProductEditTransferEntity();
-        productEditTransferEntity.setProductTransfer(productService.getProductTransferEntity(product));
-        productEditTransferEntity.setElements(productService.getAllElements());
-        return productEditTransferEntity;
+        ProductEditDto productEditDto = new ProductEditDto();
+        productEditDto.setProductTransfer(productService.getProductTransferEntity(product));
+        productEditDto.setElements(productService.getAllElements());
+        return productEditDto;
     }
 
     @PostMapping("/editProduct/confirm")
-    public boolean editConfirm(@RequestBody ProductTransferEntity productTransferEntity) {
-       productService.confirmProductEdit(productTransferEntity);
+    public boolean editConfirm(@RequestBody ProductTransferDto productTransferDto) {
+       productService.confirmProductEdit(productTransferDto);
        return true;
     }
 
@@ -78,13 +78,13 @@ public class ProductsController {
     }
 
     @PostMapping("/addProduct/confirm")
-    public boolean addConfirm(@RequestBody ProductTransferEntity product) {
+    public boolean addConfirm(@RequestBody ProductTransferDto product) {
         productService.saveNewProduct(product);
         return true;
     }
 
     @GetMapping("/showProduct/{id}")
-    public ProductTransferEntity showOneProduct(@PathVariable(value="id") Long id) {
+    public ProductTransferDto showOneProduct(@PathVariable(value="id") Long id) {
         Product product = productService.getProductById(id);
         return productService.getProductTransferEntity(product);
     }
