@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ShowElements {
+public class ShowElementsDto {
     private String filter;
     private String art;
     private List<Element> elementList;

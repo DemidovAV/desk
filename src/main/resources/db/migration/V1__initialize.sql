@@ -77,6 +77,8 @@ VALUES ('Mihail', 1),
 CREATE TABLE tasks (
     id serial PRIMARY KEY,
     executor_id int references employees,
+    creation_date timestamp,
+    close_date timestamp,
     expiration_date timestamp,
     priority int,
     status varchar,

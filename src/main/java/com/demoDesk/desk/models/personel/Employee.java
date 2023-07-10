@@ -3,9 +3,8 @@ package com.demoDesk.desk.models.personel;
 import com.demoDesk.desk.models.Enums.EmployeeStatus;
 import com.demoDesk.desk.models.queries.Task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "Employees")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
@@ -34,10 +34,12 @@ public class Employee {
     @JsonIgnore
     private List<Task> tasks;
 //
-//    @Column(name = "status")
-//    private EmployeeStatus status;
+
+    @Column(name = "status")
+    private EmployeeStatus status;
 
     public String getDepartmentTitle() {
-        return department.getTitle();
+        return this.department.getTitle();
     }
+
 }

@@ -2,7 +2,7 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.productDto.ProductEditDto;
 import com.demoDesk.desk.dto.productDto.ProductTransferDto;
-import com.demoDesk.desk.dto.productDto.ShowProducts;
+import com.demoDesk.desk.dto.productDto.ShowProductsDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
@@ -38,23 +38,23 @@ public class ProductsController {
     }
 
     @GetMapping
-    public ShowProducts showProducts(@RequestParam(value = "filter", required = false) String filter,
-                                     @RequestParam(value = "art", required = false) String art) {
-        ShowProducts showProducts = new ShowProducts();
-        showProducts.setProducts(productService.getProductsWithFiltering(filtration(filter, art)));
-        showProducts.setFilter(filter);
-        showProducts.setArt(art);
+    public ShowProductsDto showProducts(@RequestParam(value = "filter", required = false) String filter,
+                                        @RequestParam(value = "art", required = false) String art) {
+        ShowProductsDto showProductsDto = new ShowProductsDto();
+        showProductsDto.setProducts(productService.getProductsWithFiltering(filtration(filter, art)));
+        showProductsDto.setFilter(filter);
+        showProductsDto.setArt(art);
 
-        return showProducts;
+        return showProductsDto;
     }
 
     @PostMapping("/reset")
-    public ShowProducts showProductListReset() {
-        ShowProducts showProducts = new ShowProducts();
-        showProducts.setProducts(productService.getAllProducts());
-        showProducts.setFilter(null);
-        showProducts.setFilter(null);
-        return showProducts;
+    public ShowProductsDto showProductListReset() {
+        ShowProductsDto showProductsDto = new ShowProductsDto();
+        showProductsDto.setProducts(productService.getAllProducts());
+        showProductsDto.setFilter(null);
+        showProductsDto.setFilter(null);
+        return showProductsDto;
     }
     @GetMapping("/editProduct/{id}")
     public ProductEditDto showEditProduct(@PathVariable(value="id") Long id){

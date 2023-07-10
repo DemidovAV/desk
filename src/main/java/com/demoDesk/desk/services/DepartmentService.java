@@ -38,7 +38,7 @@ public class DepartmentService {
     }
 
     @Transactional
-    public void saveElement(Department department) {
+    public void saveDepartment(Department department) {
         departmentRepository.save(department);
     }
 }

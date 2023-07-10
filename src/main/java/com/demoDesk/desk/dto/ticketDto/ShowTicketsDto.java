@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ShowTickets {
+public class ShowTicketsDto {
     private List<Ticket> tickets;
     private String filter;
 }

@@ -6,8 +6,8 @@ import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Employee;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,7 +15,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "tasks")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Task {
     @Id
@@ -23,14 +24,22 @@ public class Task {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "executor_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Employee executor;
 
     @Column(name = "expiration_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Timestamp expirationDate;
+
+    @Column(name = "creation_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private Timestamp creationDate;
+
+    @Column(name = "close_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private Timestamp closeDate;
 
     @Column(name = "priority")
     private Priority priority;
@@ -38,21 +47,16 @@ public class Task {
     @Column(name = "status")
     private RequestStatus requestStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "element_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Element element;
-    public String getElementTitle() {return element == null ? "" : element.getTitle();}
 
     @Column(name = "element_quantity")
     private Integer quantity;
 
     @Column(name = "ticket_id")
     private Long ticketId;
-
-    public String getExecutorName() {
-        return executor == null ? "" : executor.getName();
-    }
 
 
 }

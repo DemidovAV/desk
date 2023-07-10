@@ -1,6 +1,10 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.taskDto.TaskEditDto;
 import com.demoDesk.desk.models.queries.Task;
+import com.demoDesk.desk.models.queries.Ticket;
+import com.demoDesk.desk.repositories.ElementRepository;
+import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.TaskRepository;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +20,21 @@ import java.util.stream.Collectors;
 public class TaskService {
     private TaskRepository taskRepository;
 
+    private ElementRepository elementRepository;
+
+    private EmployeeRepository employeeRepository;
+
     @Autowired
     public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
+    }
+    @Autowired
+    public void setElementRepository(ElementRepository elementRepository) {
+        this.elementRepository = elementRepository;
+    }
+    @Autowired
+    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Task> getTasksWithFiltering(Specification<Task> specification) {
@@ -45,15 +61,31 @@ public class TaskService {
     }
 
 
-    public List<Task> sortTicketsByExpirationDate (List<Task> tasks){
+    public List<Task> sortTasksByExpirationDate (List<Task> tasks){
         return tasks.stream().sorted(Comparator.comparing(Task::getExpirationDate)).collect(Collectors.toList());
     }
 
-    public List<Task> sortTicketsByStatus (List<Task> tasks){
+    public List<Task> sortTasksByStatus (List<Task> tasks){
         return tasks.stream().sorted(Comparator.comparing(Task::getRequestStatus)).collect(Collectors.toList());
     }
 
-    public List<Task> sortTicketsByPriority (List<Task> tasks){
+    public List<Task> sortTasksByPriority (List<Task> tasks){
         return tasks.stream().sorted(Comparator.comparing(Task::getPriority)).collect(Collectors.toList());
+    }
+
+    public List<Task> sortTasksByCreationDate (List<Task> tasks){
+        return tasks.stream().sorted(Comparator.comparing(Task::getCreationDate)).collect(Collectors.toList());
+    }
+
+    public List<Task> sortTasksByCloseDate (List<Task> tasks){
+        return tasks.stream().sorted(Comparator.comparing(Task::getCloseDate)).collect(Collectors.toList());
+    }
+
+    public TaskEditDto prepareTaskEditDto(Long id) {
+        TaskEditDto taskEditDto = new TaskEditDto();
+        taskEditDto.setTask(findById(id));
+        taskEditDto.setElements(elementRepository.findAll());
+        taskEditDto.setEmployees(employeeRepository.findAll());
+        return taskEditDto;
     }
 }

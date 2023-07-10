@@ -2,7 +2,7 @@ package com.demoDesk.desk.controllers;
 
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
-import com.demoDesk.desk.dto.ticketDto.ShowTickets;
+import com.demoDesk.desk.dto.ticketDto.ShowTicketsDto;
 import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
 import com.demoDesk.desk.dto.ticketDto.TicketEditDto;
 import com.demoDesk.desk.models.nomenclature.Product;
@@ -45,75 +45,75 @@ public class TicketController {
 
     //Показывает страницу со списком уже существующих тикетов
     @GetMapping
-    public ShowTickets showTickets(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
-        showTickets.setTickets(ticketService.getTicketsWithFiltering(spec(filter)));
-        showTickets.setFilter(filter);
-        return showTickets;
+    public ShowTicketsDto showTickets(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
+        showTicketsDto.setTickets(ticketService.getTicketsWithFiltering(spec(filter)));
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сортируем отфильтрованные тикеты по дате дедлайна
     @PostMapping("/sortByExpirationDate")
-    public ShowTickets sortByExpirationDate(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
+    public ShowTicketsDto sortByExpirationDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByExpirationDate(filteredTickets);
-        showTickets.setTickets(sortedTickets);
-        showTickets.setFilter(filter);
-        return showTickets;
+        showTicketsDto.setTickets(sortedTickets);
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сортируем отфильтрованные тикеты по дате создания
     @PostMapping("/sortByCreationDate")
-    public ShowTickets sortByCreationDate(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
+    public ShowTicketsDto sortByCreationDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByCreationDate(filteredTickets);
-        showTickets.setTickets(sortedTickets);
-        showTickets.setFilter(filter);
-        return showTickets;
+        showTicketsDto.setTickets(sortedTickets);
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сортируем отфильтрованные тикеты по дате закрытия тикета
     @PostMapping("/sortByCloseDate")
-    public ShowTickets sortByCloseDate(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
+    public ShowTicketsDto sortByCloseDate(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByCloseDate(filteredTickets);
-        showTickets.setTickets(sortedTickets);
-        showTickets.setFilter(filter);
-        return showTickets;
+        showTicketsDto.setTickets(sortedTickets);
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сортируем отфильтрованные тикеты по статусу
     @PostMapping("/sortByStatus")
-    public ShowTickets sortByStatus(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
+    public ShowTicketsDto sortByStatus(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByStatus(filteredTickets);
-        showTickets.setTickets(sortedTickets);
-        showTickets.setFilter(filter);
-        return showTickets;
+        showTicketsDto.setTickets(sortedTickets);
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сортируем отфильтрованные тикеты по приоритету
     @PostMapping("/sortByPriority")
-    public ShowTickets sortByPriority(@RequestParam(value = "filter", required = false) String filter){
-        ShowTickets showTickets = new ShowTickets();
+    public ShowTicketsDto sortByPriority(@RequestParam(value = "filter", required = false) String filter){
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
         List<Ticket> filteredTickets = ticketService.getTicketsWithFiltering(spec(filter));
         List<Ticket> sortedTickets = ticketService.sortTicketsByPriority(filteredTickets);
-        showTickets.setTickets(sortedTickets);
-        showTickets.setFilter(filter);
-        return showTickets;
+        showTicketsDto.setTickets(sortedTickets);
+        showTicketsDto.setFilter(filter);
+        return showTicketsDto;
     }
 
     //Сброс фильтров
     @PostMapping("/reset")
-    public ShowTickets resetShowTickets(Model model) {
-        ShowTickets showTickets = new ShowTickets();
-        showTickets.setTickets(ticketService.getAllTickets());
-        showTickets.setFilter(null);
-        return showTickets;
+    public ShowTicketsDto resetShowTickets() {
+        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
+        showTicketsDto.setTickets(ticketService.getAllTickets());
+        showTicketsDto.setFilter(null);
+        return showTicketsDto;
     }
 
     //создание тикета - отсылаем список изделий

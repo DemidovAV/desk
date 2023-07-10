@@ -1,6 +1,6 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.dto.elementDto.ShowElements;
+import com.demoDesk.desk.dto.elementDto.ShowElementsDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
@@ -36,23 +36,23 @@ public class ElementController {
     }
 
     @GetMapping
-    public ShowElements showElements(@RequestParam(value = "filter", required = false) String filter,
-                                     @RequestParam(value = "art", required = false) String art) {
-        ShowElements showElements = new ShowElements();
-        showElements.setElementList(elementService.getElementsWithFiltering(filtration(filter, art)));
-        showElements.setFilter(filter);
-        showElements.setArt(art);
+    public ShowElementsDto showElements(@RequestParam(value = "filter", required = false) String filter,
+                                        @RequestParam(value = "art", required = false) String art) {
+        ShowElementsDto showElementsDto = new ShowElementsDto();
+        showElementsDto.setElementList(elementService.getElementsWithFiltering(filtration(filter, art)));
+        showElementsDto.setFilter(filter);
+        showElementsDto.setArt(art);
 
-        return showElements;
+        return showElementsDto;
     }
 
     @PostMapping("/reset")
-    public ShowElements showElementListReset(Model model) {
-        ShowElements showElementsReset = new ShowElements();
-        showElementsReset.setElementList(elementService.getAllElements());
-        showElementsReset.setFilter(null);
-        showElementsReset.setArt(null);
-        return showElementsReset;
+    public ShowElementsDto showElementListReset(Model model) {
+        ShowElementsDto showElementsDtoReset = new ShowElementsDto();
+        showElementsDtoReset.setElementList(elementService.getAllElements());
+        showElementsDtoReset.setFilter(null);
+        showElementsDtoReset.setArt(null);
+        return showElementsDtoReset;
     }
     @GetMapping("/editElement/{id}")
     public Element showEditElement(@PathVariable(value="id") Long id){

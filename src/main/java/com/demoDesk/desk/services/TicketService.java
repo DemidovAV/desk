@@ -111,6 +111,7 @@ public class TicketService {
         List<ProductElementInfo> elements = creationDto.getProductElementInfos();
         for(ProductElementInfo pei: elements) {
             Task task = new Task();
+            task.setCreationDate(new Timestamp(System.currentTimeMillis()));
             task.setTicketId(savedTicket.getId());
             task.setElement(pei.getElement());
             task.setQuantity(pei.getCount());
@@ -126,8 +127,7 @@ public class TicketService {
         assert searchElement != null;
         Department dep = searchElement.getDepartment();
         List<Employee> employees = dep.getEmployees();
-        Employee employeeForTask = employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
-        return employeeForTask;
+        return employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
     }
 
     public void ticketEditExecute(TicketEditDto ticketEdit) {

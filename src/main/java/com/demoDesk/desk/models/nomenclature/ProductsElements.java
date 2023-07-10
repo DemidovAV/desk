@@ -1,8 +1,6 @@
 package com.demoDesk.desk.models.nomenclature;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,7 +8,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products_elements")
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 public class ProductsElements {
     @Id
