@@ -13,7 +13,6 @@ import com.demoDesk.desk.services.ProductService;
 import com.demoDesk.desk.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

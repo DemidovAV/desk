@@ -1,12 +1,8 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Department;
-import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
-import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

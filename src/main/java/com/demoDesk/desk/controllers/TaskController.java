@@ -1,13 +1,8 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.taskDto.ShowTasksDto;
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
-import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
-import com.demoDesk.desk.dto.ticketDto.TicketEditDto;
-import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Task;
-import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import com.demoDesk.desk.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
