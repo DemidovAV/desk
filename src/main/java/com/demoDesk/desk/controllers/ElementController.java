@@ -46,8 +46,12 @@ public class ElementController {
         return showElementsDto;
     }
 
+    /**
+     * тут забыл удалить модель, я удалил
+     *
+     */
     @PostMapping("/reset")
-    public ShowElementsDto showElementListReset(Model model) {
+    public ShowElementsDto showElementListReset() {
         ShowElementsDto showElementsDtoReset = new ShowElementsDto();
         showElementsDtoReset.setElementList(elementService.getAllElements());
         showElementsDtoReset.setFilter(null);
@@ -76,6 +80,18 @@ public class ElementController {
         return elementService.getAllDepartments();
     }
     //
+
+    /**
+     * Тут по примеру с TicketController можно совместить с /editElement/confirm, нет смысла городить кучу точек входа
+     * вот пример, тут производится  поиск записи в базе, если в базе нет, то создается новая, затем мы ее заполняем
+     * данными пришедшими с фронта и сохраняем/обновляем запись в бд
+     * InsuranceCompanyEntity entity = jpaInsuranceCompanyRepository.findById(insuranceCompany.getId())
+     *             .orElse(new InsuranceCompanyEntity());
+     *         entity.setId(insuranceCompany.getId());
+     *         entity.setName(insuranceCompany.getName());
+     *
+     *         jpaInsuranceCompanyRepository.save(entity);
+     */
     @PostMapping("/addElement/confirm")
     public boolean addElementConfirm(@RequestBody Element element) {
         elementService.saveElement(element);

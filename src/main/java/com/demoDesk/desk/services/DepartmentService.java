@@ -27,7 +27,7 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)//зачем в транзакции делаешь?
     public Department getDepartmentById(Long id) {
         return departmentRepository.findOne(DepartmentSpec.findById(id)).orElse(null);
     }

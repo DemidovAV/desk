@@ -9,6 +9,7 @@ import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.ProductsElementsRepository;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,26 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * так, смотри у тебя неправильный инджект объектов к класс, надо это делать через конструктор.
+ *     @Autowired
+ *     public void setElementRepository(ElementRepository elementRepository) {
+ *         this.elementRepository = elementRepository;
+ *     }
+ * Такой вариант(что выше написан) самый наихудший который можно было выбрать. в этом классе покажу как надо былдо
+ * сделать, переделай во всех остальных. использование RequiredArgsConstructor и final в полях равносильно внедрению
+ * через конструктор. Просто облегчаем себе жизнь с помощью ломбока
+ */
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    private ProductsElementsRepository productsElementsRepository;
-    private ElementRepository elementRepository;
-    private ProductRepository productRepository;
-
-    @Autowired
-    public void setElementRepository(ElementRepository elementRepository) {
-        this.elementRepository = elementRepository;
-    }
-    @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-    @Autowired
-    public void setProductsElementsRepository(ProductsElementsRepository productsElementsRepository) {
-        this.productsElementsRepository = productsElementsRepository;
-    }
+    private final ProductsElementsRepository productsElementsRepository;
+    private final ElementRepository elementRepository;
+    private final ProductRepository productRepository;
 
     public List<Product> getProductsWithFiltering(Specification<Product> specification) {
         return productRepository.findAll(specification);
@@ -109,6 +107,12 @@ public class ProductService {
             }
         }
     }
+
+    /**
+     * ну тут тоже можно объединить в единый метод с confirmProductEdit внимательнее посмотри, код прям идентичен
+     * немного логики добавить и все
+     *
+     */
     @Transactional
     public void saveNewProduct(ProductTransferDto productTransferDto) {
         Product product = new Product();

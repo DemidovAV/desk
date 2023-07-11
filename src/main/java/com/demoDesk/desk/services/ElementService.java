@@ -34,10 +34,12 @@ public class ElementService {
         return elementRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+    /**
+     * зачем тебе транзакция для чтения? тут можно без нее обойтись
+     *
+     */
     public Element getElementById(Long id) {
-        Element element= elementRepository.findOne(ElementSpec.findById(id)).orElse(null);
-        return element;
+        return elementRepository.findOne(ElementSpec.findById(id)).orElse(null);
     }
 
     @Transactional

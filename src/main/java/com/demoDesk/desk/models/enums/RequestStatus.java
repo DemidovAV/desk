@@ -1,4 +1,4 @@
-package com.demoDesk.desk.models.Enums;
+package com.demoDesk.desk.models.enums;
 //Статус тасков - выполняется, выполнено, отменено
 public enum RequestStatus {
     IN_PROGRESS ("In progress"),

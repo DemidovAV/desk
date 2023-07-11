@@ -16,6 +16,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * тут аналогично с TicketService, не забудь про транзакции(они не везде должны быть)
+ */
 @Service
 public class TaskService {
     private TaskRepository taskRepository;

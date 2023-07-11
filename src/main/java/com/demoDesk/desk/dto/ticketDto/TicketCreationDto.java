@@ -1,7 +1,7 @@
 package com.demoDesk.desk.dto.ticketDto;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
-import com.demoDesk.desk.models.Enums.Priority;
+import com.demoDesk.desk.models.enums.Priority;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

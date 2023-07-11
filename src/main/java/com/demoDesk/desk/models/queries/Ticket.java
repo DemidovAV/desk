@@ -1,9 +1,8 @@
 package com.demoDesk.desk.models.queries;
 
-import com.demoDesk.desk.models.Enums.Priority;
-import com.demoDesk.desk.models.Enums.RequestStatus;
+import com.demoDesk.desk.models.enums.Priority;
+import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.nomenclature.Product;
-import com.demoDesk.desk.models.queries.Task;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

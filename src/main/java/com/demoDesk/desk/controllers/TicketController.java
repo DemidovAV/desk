@@ -45,13 +45,33 @@ public class TicketController {
     //Показывает страницу со списком уже существующих тикетов
     @GetMapping
     public ShowTicketsDto showTickets(@RequestParam(value = "filter", required = false) String filter){
-        ShowTicketsDto showTicketsDto = new ShowTicketsDto();
-        showTicketsDto.setTickets(ticketService.getTicketsWithFiltering(spec(filter)));
-        showTicketsDto.setFilter(filter);
-        return showTicketsDto;
+        return ShowTicketsDto.builder()
+            .tickets(ticketService.getTicketsWithFiltering(spec(filter))) // много кода, проще сделать так
+            .filter(filter)
+            .build();
     }
 
     //Сортируем отфильтрованные тикеты по дате дедлайна
+
+    /**
+     * Почему у тебя фильтр стоит  required = false, у тебя запрос может быть без поля  этого?
+     *
+     * Так, смотри, далее ниже у тебя идет громадный код, который на 100% идентичный. Тут можно создать одну точку
+     * входа, которая будет проводить фильтровку и сортировкую для примера: добавляем еще один параметр при входе,
+     * название поля.В такой реализации не нужно дублировать кучу кода.
+     * еще строки для фильтров можно передавать списком, глянь код https://habr.com/ru/companies/otus/articles/707724/
+     *
+     */
+    public ShowTicketsDto sortTicketsExample(@RequestParam(value = "filter", required = false) String filter,  @RequestParam("fieldName") String fieldName){
+        List<Ticket> filteredTickets= ticketService.getTicketsWithFiltering(spec(filter));
+
+        return   ShowTicketsDto.builder()
+            .tickets(ticketService.sortTicketsExample(filteredTickets, fieldName)) // много кода, проще сделать так
+            .filter(filter)
+            .build();
+    }
+
+
     @PostMapping("/sortByExpirationDate")
     public ShowTicketsDto sortByExpirationDate(@RequestParam(value = "filter", required = false) String filter){
         ShowTicketsDto showTicketsDto = new ShowTicketsDto();
@@ -115,6 +135,10 @@ public class TicketController {
         return showTicketsDto;
     }
 
+    /**
+     * ПОЧЕМУ в контроллере тикета у тебя висят продуктовые точки входа?
+     * и я до конца не осознал смысл этих точек входа
+     */
     //создание тикета - отсылаем список изделий
     @GetMapping("/createTicket")
     public List<Product> createNewTicket() {
@@ -148,6 +172,12 @@ public class TicketController {
         return true;
     }
 
+    /**
+     * Вот это лишнее. Смотри, на фронте данные о тикете хранятся. он может эти данные добавить в кэш браузера и
+     * вытягивать эти данные. т.е. открывает страницу новую и в ней отображает инфу того или иного тикета.
+     *
+     *
+     */
     //Редактировать выбранный тикет
     @GetMapping("/edit/{id}")
     public TicketEditDto editTicket(@PathVariable(value = "id") Long id) {
@@ -159,6 +189,11 @@ public class TicketController {
         return ticketEdit;
     }
 
+    /**
+     * Это тоже лишнее, ты можешь использовать для этой операции код контроллера  @PostMapping("/createTicket/confirm")
+     * пример записи новой сущности или редактирования существующей я тебе кидал, если не понял как применить,
+     * отпишись, сделаю.
+     */
     @PostMapping("/edit/confirm")
     public boolean ticketEditConfirm(@RequestBody TicketEditDto ticketEdit) {
         ticketService.ticketEditExecute(ticketEdit);

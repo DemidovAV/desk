@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Тут аналогичные вопросы с остальными контроллерами
+ */
 
 @RestController
 @RequestMapping("/products")
