@@ -119,6 +119,7 @@ public class TicketService {
             task.setPriority(creationDto.getPriority());
             task.setExecutor(getEmployeeForTask(pei.getElement()));
             taskRepository.save(task);
+
         }
     }
 
