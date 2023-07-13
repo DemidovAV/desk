@@ -3,6 +3,7 @@ package com.demoDesk.desk.services;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DepartmentService {
-    private DepartmentRepository departmentRepository;
-
-    @Autowired
-    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
-    }
+    private final DepartmentRepository departmentRepository;
 
     public List<Department> getDepartmentsWithFiltering(Specification<Department> specification) {
         return departmentRepository.findAll(specification);
@@ -27,7 +24,6 @@ public class DepartmentService {
         return departmentRepository.findAll();
     }
 
-    @Transactional(readOnly = true)//зачем в транзакции делаешь?
     public Department getDepartmentById(Long id) {
         return departmentRepository.findOne(DepartmentSpec.findById(id)).orElse(null);
     }

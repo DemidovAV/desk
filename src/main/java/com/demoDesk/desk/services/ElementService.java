@@ -5,6 +5,7 @@ import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -13,18 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ElementService {
 
-    private ElementRepository elementRepository;
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    public void setElementRepository(ElementRepository elementRepository) {
-        this.elementRepository = elementRepository;
-    }
-    @Autowired
-    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
-    }
+    private final ElementRepository elementRepository;
+    private final DepartmentRepository departmentRepository;
 
     public List<Element> getElementsWithFiltering(Specification<Element> specification) {
         return elementRepository.findAll(specification);

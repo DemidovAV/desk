@@ -4,6 +4,7 @@ import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -12,19 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeService {
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    @Autowired
-    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-    @Autowired
-    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
-    }
 
     public List<Employee> getEmployeesWithFiltering(Specification<Employee> specification) {
         return employeeRepository.findAll(specification);
@@ -34,7 +28,7 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findOne(EmployeeSpec.findById(id)).orElse(null);
     }
@@ -45,7 +39,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void saveElement(Employee employee) {
+    public void saveEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
 }

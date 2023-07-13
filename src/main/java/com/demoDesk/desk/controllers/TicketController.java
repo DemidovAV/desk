@@ -62,11 +62,12 @@ public class TicketController {
      * еще строки для фильтров можно передавать списком, глянь код https://habr.com/ru/companies/otus/articles/707724/
      *
      */
-    public ShowTicketsDto sortTicketsExample(@RequestParam(value = "filter", required = false) String filter,  @RequestParam("fieldName") String fieldName){
+    @PostMapping
+    public ShowTicketsDto sortTickets(@RequestParam(value = "filter", required = false) String filter,  @RequestParam("sort") String sortBy){
         List<Ticket> filteredTickets= ticketService.getTicketsWithFiltering(spec(filter));
 
         return   ShowTicketsDto.builder()
-            .tickets(ticketService.sortTicketsExample(filteredTickets, fieldName)) // много кода, проще сделать так
+            .tickets(ticketService.sortTickets(filteredTickets, sortBy)) // много кода, проще сделать так
             .filter(filter)
             .build();
     }

@@ -2,6 +2,7 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.services.DepartmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
+@RequiredArgsConstructor
 public class DepartmentController {
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
-    @Autowired
-    public void setDepartmentService(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
 
 //    private Specification<Department> filtration(String filter, String art) {
 //        Specification<Department> spec = Specification.where(null);

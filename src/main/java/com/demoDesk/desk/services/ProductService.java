@@ -45,7 +45,6 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Product getProductById(Long id) {
         return productRepository.findOne(ProductSpec.findById(id)).orElse(null);
     }

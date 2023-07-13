@@ -5,6 +5,7 @@ import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.services.ElementService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.ui.Model;
@@ -14,13 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/elements")
+@RequiredArgsConstructor
 public class ElementController {
-    private ElementService elementService;
-
-    @Autowired
-    public void setElementService(ElementService elementService) {
-        this.elementService = elementService;
-    }
+    private final ElementService elementService;
 
     private Specification<Element> filtration(String filter, String art) {
         Specification<Element> spec = Specification.where(null);

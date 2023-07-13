@@ -7,6 +7,7 @@ import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.TaskRepository;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -20,25 +21,14 @@ import java.util.stream.Collectors;
  * тут аналогично с TicketService, не забудь про транзакции(они не везде должны быть)
  */
 @Service
+@RequiredArgsConstructor
 public class TaskService {
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
-    private ElementRepository elementRepository;
+    private final ElementRepository elementRepository;
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    public void setTaskRepository(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-    @Autowired
-    public void setElementRepository(ElementRepository elementRepository) {
-        this.elementRepository = elementRepository;
-    }
-    @Autowired
-    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     public List<Task> getTasksWithFiltering(Specification<Task> specification) {
         return taskRepository.findAll(specification);
@@ -48,7 +38,7 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+
     public Task findById(Long id) {
         return taskRepository.findOne(TaskSpec.findById(id)).orElse(null);
     }
@@ -63,6 +53,30 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public List<Task> sortTasks(List<Task> tasks, String sortParameter) {
+        switch (sortParameter) {
+            case "expirationDate": {
+                return tasks.stream().sorted(Comparator.comparing(Task::getExpirationDate)).collect(Collectors.toList());
+            }
+            case "closeDate": {
+                return tasks.stream().sorted(Comparator.comparing(Task::getCloseDate)).collect(Collectors.toList());
+            }
+            case "creationDate": {
+                return tasks.stream().sorted(Comparator.comparing(Task::getCreationDate)).collect(Collectors.toList());
+            }
+            case "status": {
+                return tasks.stream().sorted(Comparator.comparing(Task::getRequestStatus)).collect(Collectors.toList());
+
+            }
+            case "priority": {
+                return tasks.stream().sorted(Comparator.comparing(Task::getPriority)).collect(Collectors.toList());
+
+            }
+            default:
+                return tasks;
+        }
+
+    }
 
     public List<Task> sortTasksByExpirationDate (List<Task> tasks){
         return tasks.stream().sorted(Comparator.comparing(Task::getExpirationDate)).collect(Collectors.toList());

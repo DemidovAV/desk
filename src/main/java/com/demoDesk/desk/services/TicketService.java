@@ -1,48 +1,38 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
-import com.demoDesk.desk.dto.ticketDto.*;
+import com.demoDesk.desk.dto.ticketDto.TicketCreationDto;
+import com.demoDesk.desk.dto.ticketDto.TicketEditDto;
 import com.demoDesk.desk.models.enums.RequestStatus;
-import com.demoDesk.desk.models.nomenclature.*;
-import com.demoDesk.desk.models.personel.*;
-import com.demoDesk.desk.models.queries.*;
-import com.demoDesk.desk.repositories.*;
+import com.demoDesk.desk.models.nomenclature.Element;
+import com.demoDesk.desk.models.nomenclature.Product;
+import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.queries.Task;
+import com.demoDesk.desk.models.queries.Ticket;
+import com.demoDesk.desk.repositories.ElementRepository;
+import com.demoDesk.desk.repositories.ProductRepository;
+import com.demoDesk.desk.repositories.TaskRepository;
+import com.demoDesk.desk.repositories.TicketRepository;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
-	private TaskRepository taskRepository;
-	private ElementRepository elementRepository;
-	private ProductRepository productRepository;
-	private TicketRepository ticketRepository;
+	private final TaskRepository taskRepository;
+	private final ElementRepository elementRepository;
+	private final ProductRepository productRepository;
+	private final TicketRepository ticketRepository;
 
-	@Autowired
-	public void setTicketRepository(TicketRepository ticketRepository) {
-		this.ticketRepository = ticketRepository;
-	}
-
-	@Autowired
-	public void setTaskRepository(TaskRepository taskRepository) {
-		this.taskRepository = taskRepository;
-	}
-
-	@Autowired
-	public void setElementRepository(ElementRepository elementRepository) {
-		this.elementRepository = elementRepository;
-	}
-
-	@Autowired
-	public void setProductRepository(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
 
 	public List<Ticket> getTicketsWithFiltering(Specification<Ticket> specification) {
 		return ticketRepository.findAll(specification);
@@ -52,7 +42,6 @@ public class TicketService {
 		return ticketRepository.findAll();
 	}
 
-	@Transactional(readOnly = true)
 	public Ticket findById(Long id) {
 		return ticketRepository.findOne(TicketSpec.findById(id)).orElse(null);
 	}
@@ -62,10 +51,6 @@ public class TicketService {
 		ticketRepository.deleteById(id);
 	}
 
-	@Transactional
-	public void saveTicket(Ticket ticket) {
-		ticketRepository.save(ticket);
-	}
 
 	public List<Product> getProductsList() {
 		return productRepository.findAll();
@@ -87,13 +72,23 @@ public class TicketService {
 	 * Продолжение примера, тут мы используем switch. и отсутствует почти везде дублирующий код(пример не весь,
 	 * остальные сортировки можно добавить)
 	 */
-	public List<Ticket> sortTicketsExample(List<Ticket> tickets, String fieldName) {
-		switch (fieldName) {
+	public List<Ticket> sortTickets(List<Ticket> tickets, String sortParameter) {
+		switch (sortParameter) {
 			case "expirationDate": {
 				return tickets.stream().sorted(Comparator.comparing(Ticket::getExpirationDate)).collect(Collectors.toList());
 			}
+			case "closeDate": {
+				return tickets.stream().sorted(Comparator.comparing(Ticket::getCloseDate)).collect(Collectors.toList());
+			}
+			case "creationDate": {
+				return tickets.stream().sorted(Comparator.comparing(Ticket::getCreationDate)).collect(Collectors.toList());
+			}
 			case "status": {
 				return tickets.stream().sorted(Comparator.comparing(Ticket::getRequestStatus)).collect(Collectors.toList());
+
+			}
+			case "priority": {
+				return tickets.stream().sorted(Comparator.comparing(Ticket::getPriority)).collect(Collectors.toList());
 
 			}
 			default:
@@ -109,7 +104,7 @@ public class TicketService {
 	public List<Ticket> sortTicketsByPriority(List<Ticket> tickets) {
 		return tickets.stream().sorted(Comparator.comparing(Ticket::getPriority)).collect(Collectors.toList());
 	}
-
+	@Transactional
 	public void createNewTicket(TicketCreationDto creationDto) {
 		Ticket newTicket = new Ticket();
 		newTicket.setCreationDate(new Timestamp(System.currentTimeMillis()));
@@ -146,7 +141,7 @@ public class TicketService {
 		List<Employee> employees = dep.getEmployees();
 		return employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
 	}
-
+	@Transactional
 	public void ticketEditExecute(TicketEditDto ticketEdit) {
 		Ticket ticket = findById(ticketEdit.getTicket().getId());
 		ticket.setTitle(ticketEdit.getTicket().getTitle());
