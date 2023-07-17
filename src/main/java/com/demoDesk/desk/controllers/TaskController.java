@@ -44,69 +44,6 @@ public class TaskController {
     }
 
     //Сортируем отфильтрованные таски по дате дедлайна
-    @PostMapping("/sortByExpirationDate")
-    public ShowTasksDto sortByExpirationDate(@RequestParam(value = "executor", required = false) String executor,
-                                             @RequestParam(value = "element", required = false) String element){
-        ShowTasksDto showTasksDto = new ShowTasksDto();
-        List<Task> filteredTasks = taskService.getTasksWithFiltering(spec(executor, element));
-        List<Task> sortedTasks = taskService.sortTasksByExpirationDate(filteredTasks);
-        showTasksDto.setTaskList(sortedTasks);
-        showTasksDto.setExecutorFilter(executor);
-        showTasksDto.setElementFilter(element);
-        return showTasksDto;
-    }
-
-    //Сортируем отфильтрованные таски по дате создания
-    @PostMapping("/sortByCreationDate")
-    public ShowTasksDto sortByCreationDate(@RequestParam(value = "executor", required = false) String executor,
-                                           @RequestParam(value = "element", required = false) String element){
-        ShowTasksDto showTasksDto = new ShowTasksDto();
-        List<Task> filteredTasks = taskService.getTasksWithFiltering(spec(executor, element));
-        List<Task> sortedTasks = taskService.sortTasksByCreationDate(filteredTasks);
-        showTasksDto.setTaskList(sortedTasks);
-        showTasksDto.setExecutorFilter(executor);
-        showTasksDto.setElementFilter(element);
-        return showTasksDto;
-    }
-
-    //Сортируем отфильтрованные таски по дате закрытия тикета
-    @PostMapping("/sortByCloseDate")
-    public ShowTasksDto sortByCloseDate(@RequestParam(value = "executor", required = false) String executor,
-                                           @RequestParam(value = "element", required = false) String element){
-        ShowTasksDto showTasksDto = new ShowTasksDto();
-        List<Task> filteredTasks = taskService.getTasksWithFiltering(spec(executor, element));
-        List<Task> sortedTasks = taskService.sortTasksByCloseDate(filteredTasks);
-        showTasksDto.setTaskList(sortedTasks);
-        showTasksDto.setExecutorFilter(executor);
-        showTasksDto.setElementFilter(element);
-        return showTasksDto;
-    }
-
-    //Сортируем отфильтрованные таски по статусу
-    @PostMapping("/sortByStatus")
-    public ShowTasksDto sortByStatus(@RequestParam(value = "executor", required = false) String executor,
-                                        @RequestParam(value = "element", required = false) String element){
-        ShowTasksDto showTasksDto = new ShowTasksDto();
-        List<Task> filteredTasks = taskService.getTasksWithFiltering(spec(executor, element));
-        List<Task> sortedTasks = taskService.sortTasksByStatus(filteredTasks);
-        showTasksDto.setTaskList(sortedTasks);
-        showTasksDto.setExecutorFilter(executor);
-        showTasksDto.setElementFilter(element);
-        return showTasksDto;
-    }
-
-    //Сортируем отфильтрованные таски по приоритету
-    @PostMapping("/sortByPriority")
-    public ShowTasksDto sortByPriority(@RequestParam(value = "executor", required = false) String executor,
-                                        @RequestParam(value = "element", required = false) String element){
-        ShowTasksDto showTasksDto = new ShowTasksDto();
-        List<Task> filteredTasks = taskService.getTasksWithFiltering(spec(executor, element));
-        List<Task> sortedTasks = taskService.sortTasksByPriority(filteredTasks);
-        showTasksDto.setTaskList(sortedTasks);
-        showTasksDto.setExecutorFilter(executor);
-        showTasksDto.setElementFilter(element);
-        return showTasksDto;
-    }
 
     //Сброс фильтров
     @PostMapping("/reset")

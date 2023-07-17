@@ -78,25 +78,6 @@ public class TaskService {
 
     }
 
-    public List<Task> sortTasksByExpirationDate (List<Task> tasks){
-        return tasks.stream().sorted(Comparator.comparing(Task::getExpirationDate)).collect(Collectors.toList());
-    }
-
-    public List<Task> sortTasksByStatus (List<Task> tasks){
-        return tasks.stream().sorted(Comparator.comparing(Task::getRequestStatus)).collect(Collectors.toList());
-    }
-
-    public List<Task> sortTasksByPriority (List<Task> tasks){
-        return tasks.stream().sorted(Comparator.comparing(Task::getPriority)).collect(Collectors.toList());
-    }
-
-    public List<Task> sortTasksByCreationDate (List<Task> tasks){
-        return tasks.stream().sorted(Comparator.comparing(Task::getCreationDate)).collect(Collectors.toList());
-    }
-
-    public List<Task> sortTasksByCloseDate (List<Task> tasks){
-        return tasks.stream().sorted(Comparator.comparing(Task::getCloseDate)).collect(Collectors.toList());
-    }
 
     public TaskEditDto prepareTaskEditDto(Long id) {
         TaskEditDto taskEditDto = new TaskEditDto();

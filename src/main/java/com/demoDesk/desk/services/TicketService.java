@@ -56,17 +56,6 @@ public class TicketService {
 		return productRepository.findAll();
 	}
 
-	public List<Ticket> sortTicketsByCreationDate(List<Ticket> tickets) {
-		return tickets.stream().sorted(Comparator.comparing(Ticket::getCreationDate)).collect(Collectors.toList());
-	}
-
-	public List<Ticket> sortTicketsByCloseDate(List<Ticket> tickets) {
-		return tickets.stream().sorted(Comparator.comparing(Ticket::getCloseDate)).collect(Collectors.toList());
-	}
-
-	public List<Ticket> sortTicketsByExpirationDate(List<Ticket> tickets) {
-		return tickets.stream().sorted(Comparator.comparing(Ticket::getExpirationDate)).collect(Collectors.toList());
-	}
 
 	/**
 	 * Продолжение примера, тут мы используем switch. и отсутствует почти везде дублирующий код(пример не весь,
@@ -97,13 +86,7 @@ public class TicketService {
 
 	}
 
-	public List<Ticket> sortTicketsByStatus(List<Ticket> tickets) {
-		return tickets.stream().sorted(Comparator.comparing(Ticket::getRequestStatus)).collect(Collectors.toList());
-	}
 
-	public List<Ticket> sortTicketsByPriority(List<Ticket> tickets) {
-		return tickets.stream().sorted(Comparator.comparing(Ticket::getPriority)).collect(Collectors.toList());
-	}
 	@Transactional
 	public void createNewTicket(TicketCreationDto creationDto) {
 		Ticket newTicket = new Ticket();
