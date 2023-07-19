@@ -3,7 +3,6 @@ package com.demoDesk.desk.controllers;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

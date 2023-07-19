@@ -9,10 +9,8 @@ import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
-import com.demoDesk.desk.services.ProductService;
 import com.demoDesk.desk.services.TicketService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 

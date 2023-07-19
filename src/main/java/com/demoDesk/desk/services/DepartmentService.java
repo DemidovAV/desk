@@ -4,7 +4,6 @@ import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,6 @@ package com.demoDesk.desk.models.personel;
 
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

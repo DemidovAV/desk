@@ -2,13 +2,11 @@ package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
 import com.demoDesk.desk.models.queries.Task;
-import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.TaskRepository;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

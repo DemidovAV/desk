@@ -8,7 +8,6 @@ import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.services.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
