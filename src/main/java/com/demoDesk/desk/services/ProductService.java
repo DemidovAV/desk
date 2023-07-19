@@ -19,16 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * так, смотри у тебя неправильный инджект объектов к класс, надо это делать через конструктор.
- *     @Autowired
- *     public void setElementRepository(ElementRepository elementRepository) {
- *         this.elementRepository = elementRepository;
- *     }
- * Такой вариант(что выше написан) самый наихудший который можно было выбрать. в этом классе покажу как надо былдо
- * сделать, переделай во всех остальных. использование RequiredArgsConstructor и final в полях равносильно внедрению
- * через конструктор. Просто облегчаем себе жизнь с помощью ломбока
- */
 @Service
 @RequiredArgsConstructor
 public class ProductService {

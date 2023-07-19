@@ -11,6 +11,7 @@ import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import com.demoDesk.desk.services.ProductService;
 import com.demoDesk.desk.services.TicketService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +20,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tickets")
+@RequiredArgsConstructor
 public class TicketController {
 
-    private TicketService ticketService;
-    private ProductService productService;
+    private final TicketService ticketService;
 
-    @Autowired
-    public void setTicketService(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
-    @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
-    }
 
     private Specification<Ticket> spec(String filter) {
         Specification<Ticket> spec = Specification.where(null);
@@ -72,8 +65,6 @@ public class TicketController {
             .build();
     }
 
-
-
     //Сброс фильтров
     @PostMapping("/reset")
     public ShowTicketsDto resetShowTickets() {
@@ -96,8 +87,7 @@ public class TicketController {
     //создание тикета - после выбора изделия отсылаем список его комплектующих
     @PostMapping("/createTicket/productChosen")
     public List<ProductElementInfo> getElementsForProduct(@RequestBody Product product) {
-        Product searchProduct = productService.getProductById(product.getId());
-        return productService.getProductElementInfoList(searchProduct);
+        return ticketService.getElementsForProduct(product);
     }
 
     //Подтверждение создания тикета, сохраняем новый тикет в базе

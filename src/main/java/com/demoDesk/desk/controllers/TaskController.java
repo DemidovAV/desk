@@ -5,6 +5,7 @@ import com.demoDesk.desk.dto.taskDto.TaskEditDto;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import com.demoDesk.desk.services.TaskService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
+@RequiredArgsConstructor
 public class TaskController {
-    private TaskService taskService;
-    @Autowired
-    public void setTaskService(TaskService taskService) {
-        this.taskService = taskService;
-    }
+    private final TaskService taskService;
 
     private Specification<Task> spec(String executor, String element) {
         Specification<Task> spec = Specification.where(null);

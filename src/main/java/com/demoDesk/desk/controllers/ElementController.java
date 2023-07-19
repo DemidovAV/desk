@@ -6,9 +6,7 @@ import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.services.ElementService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,10 +41,6 @@ public class ElementController {
         return showElementsDto;
     }
 
-    /**
-     * тут забыл удалить модель, я удалил
-     *
-     */
     @PostMapping("/reset")
     public ShowElementsDto showElementListReset() {
         ShowElementsDto showElementsDtoReset = new ShowElementsDto();
@@ -60,39 +54,13 @@ public class ElementController {
         return elementService.getElementById(id);
     }
 
-    @PostMapping("/editElement/confirm")
-    public boolean editElementConfirm(@RequestBody Element element) {
-        Element editableElement = elementService.getElementById(element.getId());
-        editableElement.setArt(element.getArt());
-        editableElement.setDepartment(element.getDepartment());
-        editableElement.setTitle(element.getTitle());
-        editableElement.setDescription(element.getDescription());
-        elementService.saveElement(editableElement);
-        return true;
-    }
-
-
     @GetMapping("/addElement")
     public List<Department> addNewElement() {
         return elementService.getAllDepartments();
     }
-    //
-
-    /**
-     * Тут по примеру с TicketController можно совместить с /editElement/confirm, нет смысла городить кучу точек входа
-     * вот пример, тут производится  поиск записи в базе, если в базе нет, то создается новая, затем мы ее заполняем
-     * данными пришедшими с фронта и сохраняем/обновляем запись в бд
-     * InsuranceCompanyEntity entity = jpaInsuranceCompanyRepository.findById(insuranceCompany.getId())
-     *             .orElse(new InsuranceCompanyEntity());
-     *         entity.setId(insuranceCompany.getId());
-     *         entity.setName(insuranceCompany.getName());
-     *
-     *         jpaInsuranceCompanyRepository.save(entity);
-     */
-    @PostMapping("/addElement/confirm")
-    public boolean addElementConfirm(@RequestBody Element element) {
-        elementService.saveElement(element);
-        return true;
+    @PostMapping("/editOrAddElementConfirm")
+    public boolean editOrAddElementConfirm(@RequestBody Element element) {
+        return elementService.editOrAddElementConfirm(element);
     }
 
     @GetMapping("/showElement/{id}")

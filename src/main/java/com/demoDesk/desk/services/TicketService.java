@@ -10,10 +10,8 @@ import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.models.queries.Ticket;
-import com.demoDesk.desk.repositories.ElementRepository;
-import com.demoDesk.desk.repositories.ProductRepository;
-import com.demoDesk.desk.repositories.TaskRepository;
-import com.demoDesk.desk.repositories.TicketRepository;
+import com.demoDesk.desk.repositories.*;
+import com.demoDesk.desk.repositories.specifications.ProductSpec;
 import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,8 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +31,7 @@ public class TicketService {
 	private final TaskRepository taskRepository;
 	private final ElementRepository elementRepository;
 	private final ProductRepository productRepository;
+	private final ProductsElementsRepository productsElementsRepository;
 	private final TicketRepository ticketRepository;
 
 
@@ -56,11 +57,23 @@ public class TicketService {
 		return productRepository.findAll();
 	}
 
+	public Product getProductById(Long id) {return productRepository.findOne(ProductSpec.findById(id)).orElse(null);}
 
-	/**
-	 * Продолжение примера, тут мы используем switch. и отсутствует почти везде дублирующий код(пример не весь,
-	 * остальные сортировки можно добавить)
-	 */
+	private  List<ProductElementInfo> getProductElementInfoList(Product product) {
+		List<ProductElementInfo> productElementInfoList = new ArrayList<>();
+		Set<Element> elementList = product.getElementsInProduct();
+		for(Element e: elementList) {
+			productElementInfoList.add(
+					new ProductElementInfo(e, productsElementsRepository.getElementQuantityInProduct(product.getId(), e.getId()))
+			);
+		}
+		return productElementInfoList;
+	}
+	public List<ProductElementInfo> getElementsForProduct(Product product) {
+		Product searchProduct = getProductById(product.getId());
+		return getProductElementInfoList(searchProduct);
+	}
+
 	public List<Ticket> sortTickets(List<Ticket> tickets, String sortParameter) {
 		switch (sortParameter) {
 			case "expirationDate": {
@@ -85,7 +98,6 @@ public class TicketService {
 		}
 
 	}
-
 
 	@Transactional
 	public void createNewTicket(TicketCreationDto creationDto) {

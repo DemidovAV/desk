@@ -28,10 +28,6 @@ public class ElementService {
         return elementRepository.findAll();
     }
 
-    /**
-     * зачем тебе транзакция для чтения? тут можно без нее обойтись
-     *
-     */
     public Element getElementById(Long id) {
         return elementRepository.findOne(ElementSpec.findById(id)).orElse(null);
     }
@@ -50,4 +46,25 @@ public class ElementService {
         return departmentRepository.findAll();
     }
 
+    /**
+     * Тут по примеру с TicketController можно совместить с /editElement/confirm, нет смысла городить кучу точек входа
+     * вот пример, тут производится  поиск записи в базе, если в базе нет, то создается новая, затем мы ее заполняем
+     * данными пришедшими с фронта и сохраняем/обновляем запись в бд
+     * InsuranceCompanyEntity entity = jpaInsuranceCompanyRepository.findById(insuranceCompany.getId())
+     *             .orElse(new InsuranceCompanyEntity());
+     *         entity.setId(insuranceCompany.getId());
+     *         entity.setName(insuranceCompany.getName());
+     *
+     *         jpaInsuranceCompanyRepository.save(entity);
+     */
+
+    public boolean editOrAddElementConfirm(Element element) {
+        Element incomingElement = elementRepository.findById(element.getId()).orElse(new Element());
+        incomingElement.setArt(element.getArt());
+        incomingElement.setDepartment(element.getDepartment());
+        incomingElement.setTitle(element.getTitle());
+        incomingElement.setDescription(element.getDescription());
+        elementRepository.save(incomingElement);
+        return true;
+    }
 }
