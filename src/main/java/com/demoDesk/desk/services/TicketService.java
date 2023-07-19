@@ -101,31 +101,32 @@ public class TicketService {
 
 	@Transactional
 	public void createNewTicket(TicketCreationDto creationDto) {
-		Ticket newTicket = new Ticket();
-		newTicket.setCreationDate(new Timestamp(System.currentTimeMillis()));
-		newTicket.setComment(creationDto.getComment());
-		newTicket.setPriority(creationDto.getPriority());
-		newTicket.setExpirationDate(creationDto.getExpirationDate());
-		newTicket.setProduct(creationDto.getProduct());
-		newTicket.setQuantity(creationDto.getQuantity());
-		newTicket.setTitle(creationDto.getTitle());
-		newTicket.setRequestStatus(RequestStatus.IN_PROGRESS);
-		ticketRepository.save(newTicket);
-
-		Ticket savedTicket = ticketRepository.findFirstByOrderByIdDesc();
+		Ticket savedTicket = ticketRepository.save(
+				Ticket.builder()
+						.creationDate(new Timestamp(System.currentTimeMillis()))
+						.comment(creationDto.getComment())
+						.priority(creationDto.getPriority())
+						.expirationDate(creationDto.getExpirationDate())
+						.product(creationDto.getProduct())
+						.quantity(creationDto.getQuantity())
+						.title(creationDto.getTitle())
+						.requestStatus(RequestStatus.IN_PROGRESS)
+						.build()
+		);
 
 		List<ProductElementInfo> elements = creationDto.getProductElementInfos();
 		for (ProductElementInfo pei : elements) {
-			Task task = new Task();
-			task.setCreationDate(new Timestamp(System.currentTimeMillis()));
-			task.setTicketId(savedTicket.getId());
-			task.setElement(pei.getElement());
-			task.setQuantity(pei.getCount());
-			task.setExpirationDate(creationDto.getExpirationDate());
-			task.setPriority(creationDto.getPriority());
-			task.setExecutor(getEmployeeForTask(pei.getElement()));
-			taskRepository.save(task);
-
+			taskRepository.save(
+					Task.builder()
+							.creationDate(savedTicket.getCreationDate())
+							.ticketId(savedTicket.getId())
+							.element(pei.getElement())
+							.quantity(pei.getCount())
+							.expirationDate(creationDto.getExpirationDate())
+							.priority(creationDto.getPriority())
+							.executor(getEmployeeForTask(pei.getElement()))
+							.build()
+			);
 		}
 	}
 

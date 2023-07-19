@@ -2,9 +2,7 @@ package com.demoDesk.desk.models.personel;
 
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,9 +10,9 @@ import java.util.List;
 //Отдел, указывает кто здесь работает
 @Entity
 @Table(name = "departments")
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

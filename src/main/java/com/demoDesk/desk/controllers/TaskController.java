@@ -2,12 +2,16 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.taskDto.ShowTasksDto;
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
+import com.demoDesk.desk.dto.ticketDto.ShowTicketsDto;
 import com.demoDesk.desk.models.queries.Task;
+import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import com.demoDesk.desk.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -32,19 +36,32 @@ public class TaskController {
     public ShowTasksDto showTasks(@RequestParam(value = "executor", required = false) String executor,
                                       @RequestParam(value = "element", required = false) String element){
         ShowTasksDto showTasksDto = new ShowTasksDto();
-        showTasksDto.setTaskList(taskService.getTasksWithFiltering(spec(executor, element)));
+        showTasksDto.setTasksList(taskService.getTasksWithFiltering(spec(executor, element)));
         showTasksDto.setExecutorFilter(executor);
         showTasksDto.setElementFilter(element);
         return showTasksDto;
     }
 
-    //Сортируем отфильтрованные таски по дате дедлайна
+    //Сортируем отфильтрованные таски
+
+    @PostMapping
+    public ShowTasksDto sortTasks(@RequestParam(value = "executor", required = false) String executor,
+                                    @RequestParam(value = "element", required = false) String element,
+                                    @RequestParam(value = "sort") String sortBy){
+        List<Task> filteredTasks= taskService.getTasksWithFiltering(spec(executor, element));
+
+        return   ShowTasksDto.builder()
+                .tasksList(taskService.sortTasks(filteredTasks, sortBy))
+                .executorFilter(executor)
+                .elementFilter(element)
+                .build();
+    }
 
     //Сброс фильтров
     @PostMapping("/reset")
     public ShowTasksDto resetShowTickets() {
         ShowTasksDto showTasksDto = new ShowTasksDto();
-        showTasksDto.setTaskList(taskService.getAllTasks());
+        showTasksDto.setTasksList(taskService.getAllTasks());
         showTasksDto.setExecutorFilter(null);
         showTasksDto.setElementFilter(null);
         return showTasksDto;

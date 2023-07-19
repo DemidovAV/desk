@@ -5,6 +5,8 @@ import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +19,8 @@ import java.util.List;
 @Table(name = "tickets")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
