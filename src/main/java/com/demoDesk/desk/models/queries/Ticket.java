@@ -39,7 +39,7 @@ public class Ticket {
     private Timestamp closeDate;
 
     @Column(name = "status")
-    private RequestStatus requestStatus;
+    private String requestStatus;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

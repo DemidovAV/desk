@@ -110,7 +110,7 @@ public class TicketService {
 						.product(creationDto.getProduct())
 						.quantity(creationDto.getQuantity())
 						.title(creationDto.getTitle())
-						.requestStatus(RequestStatus.IN_PROGRESS)
+						.requestStatus(RequestStatus.IN_PROGRESS.getTitle())
 						.build()
 		);
 

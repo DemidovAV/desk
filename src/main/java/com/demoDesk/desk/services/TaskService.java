@@ -3,10 +3,13 @@ package com.demoDesk.desk.services;
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
 import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.queries.Task;
+import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.TaskRepository;
+import com.demoDesk.desk.repositories.TicketRepository;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
+import com.demoDesk.desk.repositories.specifications.TicketSpec;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,8 @@ public class TaskService {
     private final ElementRepository elementRepository;
 
     private final EmployeeRepository employeeRepository;
+
+    private final TicketRepository ticketRepository;
 
 
     public List<Task> getTasksWithFiltering(Specification<Task> specification) {
@@ -91,11 +96,31 @@ public class TaskService {
         switch (status) {
             case "inProgress":
                 task.setRequestStatus(RequestStatus.IN_PROGRESS.getTitle());
+                taskRepository.save(task);
+                break;
             case "complete":
                 task.setRequestStatus(RequestStatus.COMPLETE.getTitle());
+                taskRepository.save(task);
+                checkTicketForCompleteTasks(task.getTicketId());
+                break;
             case "canceled":
                 task.setRequestStatus(RequestStatus.CANCELED.getTitle());
+                taskRepository.save(task);
+                break;
         }
-        taskRepository.save(task);
+    }
+
+    private void checkTicketForCompleteTasks(Long id) {
+        Ticket ticket = ticketRepository.findOne(TicketSpec.findById(id)).orElse(null);
+        assert ticket != null;
+        List<Task> tasks = ticket.getTasks();
+        boolean tasksCheck = false;
+        for(Task t: tasks) {
+            tasksCheck = t.getRequestStatus().equals(RequestStatus.COMPLETE.getTitle());
+        }
+        if (tasksCheck) {
+            ticket.setRequestStatus(RequestStatus.COMPLETE.getTitle());
+        }
+        ticketRepository.save(ticket);
     }
 }
