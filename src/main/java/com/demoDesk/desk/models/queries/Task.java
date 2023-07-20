@@ -46,7 +46,7 @@ public class Task {
     private Priority priority;
 
     @Column(name = "status")
-    private RequestStatus requestStatus;
+    private String requestStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "element_id")

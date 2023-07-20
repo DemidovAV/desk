@@ -92,4 +92,11 @@ public class TaskController {
 //        ticketService.ticketEditExecute(ticketEdit);
 //        return true;
 //    }
+
+    @PostMapping("/changeTaskStatus/{id}")
+    public boolean changeTaskStatus(@PathVariable(value = "id") Long id,
+                                    @RequestParam(value = "status") String status) {
+        taskService.changeTaskStatus(id, status);
+        return  true;
+    }
 }

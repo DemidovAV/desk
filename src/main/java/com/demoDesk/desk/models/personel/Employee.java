@@ -34,7 +34,7 @@ public class Employee {
 //
 
     @Column(name = "status")
-    private EmployeeStatus status;
+    private String status;
 
     public String getDepartmentTitle() {
         return this.department.getTitle();

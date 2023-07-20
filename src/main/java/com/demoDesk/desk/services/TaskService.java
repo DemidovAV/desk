@@ -1,6 +1,7 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
+import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
@@ -83,5 +84,18 @@ public class TaskService {
         taskEditDto.setElements(elementRepository.findAll());
         taskEditDto.setEmployees(employeeRepository.findAll());
         return taskEditDto;
+    }
+
+    public void changeTaskStatus(Long id, String status) {
+        Task task = findById(id);
+        switch (status) {
+            case "inProgress":
+                task.setRequestStatus(RequestStatus.IN_PROGRESS.getTitle());
+            case "complete":
+                task.setRequestStatus(RequestStatus.COMPLETE.getTitle());
+            case "canceled":
+                task.setRequestStatus(RequestStatus.CANCELED.getTitle());
+        }
+        taskRepository.save(task);
     }
 }

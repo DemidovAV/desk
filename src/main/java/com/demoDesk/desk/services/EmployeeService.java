@@ -21,8 +21,6 @@ import java.util.stream.Collectors;
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
-    private final DepartmentRepository departmentRepository;
-
 
     public List<Employee> getEmployeesWithFiltering(Specification<Employee> specification) {
         return employeeRepository.findAll(specification);
@@ -65,13 +63,13 @@ public class EmployeeService {
         List<Task> tasks = Objects.requireNonNull(employeeRepository.findOne(EmployeeSpec.findById(id)).orElse(null)).getTasks();
         switch (requestStatus) {
             case "inProgress": {
-                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.IN_PROGRESS).collect(Collectors.toList());
+                return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.IN_PROGRESS.getTitle())).collect(Collectors.toList());
             }
             case "complete": {
-                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.COMPLETE).collect(Collectors.toList());
+                return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.COMPLETE.getTitle())).collect(Collectors.toList());
             }
-            case "cancelled": {
-                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.CANCELED).collect(Collectors.toList());
+            case "canceled": {
+                return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.CANCELED.getTitle())).collect(Collectors.toList());
             }
             default:
                 return tasks;
