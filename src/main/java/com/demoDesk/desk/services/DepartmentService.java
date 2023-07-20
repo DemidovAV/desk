@@ -1,5 +1,6 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.departmentDto.ShowDepartmentDto;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
@@ -35,5 +36,13 @@ public class DepartmentService {
     @Transactional
     public void saveDepartment(Department department) {
         departmentRepository.save(department);
+    }
+
+    public ShowDepartmentDto showDepartmentWithEmployees(Long id) {
+        Department department = getDepartmentById(id);
+        return ShowDepartmentDto.builder()
+                .department(department)
+                .employees(department.getEmployees())
+                .build();
     }
 }

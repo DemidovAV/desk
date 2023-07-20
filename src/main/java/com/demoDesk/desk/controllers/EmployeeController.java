@@ -1,19 +1,15 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.employeeDto.ShowEmployeesDto;
-import com.demoDesk.desk.dto.productDto.ShowProductsDto;
+import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import com.demoDesk.desk.services.EmployeeService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,6 +51,17 @@ public class EmployeeController {
                 .name(null)
                 .employees(employeeService.getAllEmployees())
                 .build();
+    }
+
+    @GetMapping("/showEmployee/{id}")
+    public Employee showOneEmployee(@PathVariable(value="id") Long id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @PostMapping("/showEmployee/{id}/getTasks")
+    public List<Task> employeeGetTasks(@PathVariable(value="id") Long id,
+                                       @RequestParam(value = "requestStatus") String requestStatus) {
+        return employeeService.getTasksByRequestStatus(id, requestStatus);
     }
 
 }

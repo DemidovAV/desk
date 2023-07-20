@@ -1,5 +1,6 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.DepartmentRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,6 +57,24 @@ public class EmployeeService {
             }
             default:
                 return employees;
+        }
+
+    }
+
+    public List<Task> getTasksByRequestStatus(Long id, String requestStatus) {
+        List<Task> tasks = Objects.requireNonNull(employeeRepository.findOne(EmployeeSpec.findById(id)).orElse(null)).getTasks();
+        switch (requestStatus) {
+            case "inProgress": {
+                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.IN_PROGRESS).collect(Collectors.toList());
+            }
+            case "complete": {
+                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.COMPLETE).collect(Collectors.toList());
+            }
+            case "cancelled": {
+                return tasks.stream().filter(task -> task.getRequestStatus() == RequestStatus.CANCELED).collect(Collectors.toList());
+            }
+            default:
+                return tasks;
         }
 
     }
