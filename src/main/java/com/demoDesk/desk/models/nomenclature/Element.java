@@ -43,4 +43,12 @@ public class Element {
     public String getDepartmentTitle() {
         return department == null ? "" :department.getTitle();
     }
+
+    @PreRemove
+    private void removeProductAssociations() {
+        for (Product product: this.productsWithElement) {
+            product.getElementsInProduct().remove(this );
+        }
+        this.getDepartment().getElements().remove(this);
+    }
 }

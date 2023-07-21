@@ -76,4 +76,10 @@ public class EmployeeController {
         return true;
     }
 
+    @PostMapping("/deleteEmployee/{id}")
+    public boolean deleteEmployee(@PathVariable(value = "id") Long id) {
+        employeeService.deleteById(id);
+        return true;
+    }
+
 }

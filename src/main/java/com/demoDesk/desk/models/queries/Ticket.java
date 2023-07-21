@@ -41,7 +41,7 @@ public class Ticket {
     @Column(name = "status")
     private String requestStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
@@ -59,7 +59,7 @@ public class Ticket {
     @Column(name = "comment")
     private String comment;
 
-    @OneToMany(mappedBy = "ticketId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ticketId", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Task> tasks;
 

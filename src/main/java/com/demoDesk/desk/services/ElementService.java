@@ -1,6 +1,7 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.models.nomenclature.Element;
+import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.ElementRepository;

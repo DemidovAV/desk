@@ -28,7 +28,7 @@ public class Employee {
     @JsonIgnore
     private Department department;
 
-    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "executor", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Task> tasks;
 //

@@ -69,7 +69,7 @@ public class ElementController {
         return elementService.getElementById(id);
     }
 
-    @GetMapping("/deleteElement/{id}")
+    @PostMapping("/deleteElement/{id}")
     public boolean deleteElement(@PathVariable(value="id") Long id) {
         elementService.deleteById(id);
         return true;

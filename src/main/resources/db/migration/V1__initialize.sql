@@ -53,7 +53,7 @@ CREATE TABLE tickets (
     creation_date timestamp,
     close_date timestamp,
     status varchar,
-    product_id int references products,
+    product_id int references products on delete cascade,
     quantity int,
     priority int,
     expiration_date timestamp,
@@ -65,7 +65,7 @@ CREATE TABLE tickets (
 CREATE TABLE employees (
     id serial PRIMARY KEY,
     name varchar,
-    department_id int references departments,
+    department_id int references departments on delete cascade,
     status varchar);
 
 INSERT INTO employees (name, department_id)
@@ -76,15 +76,15 @@ VALUES ('Mihail', 1),
 
 CREATE TABLE tasks (
     id serial PRIMARY KEY,
-    executor_id int references employees,
+    executor_id int references employees on delete cascade,
     creation_date timestamp,
     close_date timestamp,
     expiration_date timestamp,
     priority int,
     status varchar,
-    element_id int references elements,
+    element_id int references elements on delete cascade,
     element_quantity int,
-    ticket_id int references tickets);
+    ticket_id int references tickets on delete cascade);
 
 
 

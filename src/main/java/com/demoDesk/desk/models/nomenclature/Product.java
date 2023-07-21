@@ -45,4 +45,9 @@ public class Product {
 
     private Set<Element> elementsInProduct = new HashSet<>();
 
+    public void removeElement(Element element) {
+        this.elementsInProduct.remove(element);
+        element.getProductsWithElement().remove(this);
+    }
+
 }
