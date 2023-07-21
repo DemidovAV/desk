@@ -74,11 +74,11 @@ public class ProductService {
     }
     @Transactional
     public void confirmProductEdit (ProductTransferDto productTransferDto) {
-        Product savingProduct = getProductById(productTransferDto.getId());
+        Product savingProduct = productRepository.findById(productTransferDto.getId()).orElse(new Product());
         savingProduct.setArt(productTransferDto.getArt());
         savingProduct.setTitle(productTransferDto.getTitle());
         savingProduct.setDescription(productTransferDto.getDescription());
-        productRepository.save(savingProduct);
+        savingProduct = productRepository.save(savingProduct);
         List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
         for(ProductElementInfo pe:productElementInfos) {
             if(savingProduct.getElementsInProduct().contains(pe.getElement())) {

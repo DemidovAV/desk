@@ -2,6 +2,7 @@ package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.models.enums.RequestStatus;
 import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.personel.EmployeeStatus;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
@@ -75,5 +76,21 @@ public class EmployeeService {
                 return tasks;
         }
 
+    }
+
+    public void employeeSetStatus(Long id, String status) {
+        Employee employee = getEmployeeById(id);
+        switch (status) {
+            case "ill":
+                employee.setStatus(EmployeeStatus.ILL.getTitle());
+                break;
+            case "vacation":
+                employee.setStatus(EmployeeStatus.VACATION.getTitle());
+                break;
+            case  "working":
+                employee.setStatus(EmployeeStatus.WORKING.getTitle());
+                break;
+        }
+        employeeRepository.save(employee);
     }
 }

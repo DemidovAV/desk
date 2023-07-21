@@ -1,7 +1,6 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.employeeDto.ShowEmployeesDto;
-import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
@@ -27,6 +26,7 @@ public class EmployeeController {
         return spec;
     }
 
+    //Получаем список сотрудников, можем отфильтровать по имени
     @GetMapping
     public ShowEmployeesDto showEmployees(@RequestParam(value = "name", required = false) String name) {
         return ShowEmployeesDto.builder()
@@ -35,6 +35,7 @@ public class EmployeeController {
                 .build();
     }
 
+    //Сортировка отфильтрованного списка по параметру 'sort': department или status.
     @PostMapping
     public ShowEmployeesDto showEmployeesSorted(@RequestParam(value = "name", required = false) String name,
                                                 @RequestParam(value = "sort") String sort) {
@@ -45,6 +46,7 @@ public class EmployeeController {
                 .build();
     }
 
+    //Сброс фильтров и сортировки
     @PostMapping("/reset")
     public ShowEmployeesDto showEmployeesListReset() {
         return ShowEmployeesDto.builder()
@@ -53,15 +55,25 @@ public class EmployeeController {
                 .build();
     }
 
+    //Получаем информацию о конкретном сотруднике по его id
     @GetMapping("/showEmployee/{id}")
     public Employee showOneEmployee(@PathVariable(value="id") Long id) {
         return employeeService.getEmployeeById(id);
     }
 
+    //Получаем список тасков выбранного сотрудника
     @PostMapping("/showEmployee/{id}/getTasks")
     public List<Task> employeeGetTasks(@PathVariable(value="id") Long id,
                                        @RequestParam(value = "requestStatus") String requestStatus) {
         return employeeService.getTasksByRequestStatus(id, requestStatus);
+    }
+
+    //Выставляем статус выбранному сотруднику параметром 'status': ill, working или vacation
+    @PostMapping("/showEmployee/{id}/setStatus")
+    public boolean employeeSetStatus(@PathVariable(value="id") Long id,
+                                     @RequestParam(value = "status") String status) {
+        employeeService.employeeSetStatus(id, status);
+        return true;
     }
 
 }

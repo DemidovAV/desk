@@ -32,7 +32,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "products_elements",
         joinColumns = {
             @JoinColumn(name = "product_id", referencedColumnName = "id")

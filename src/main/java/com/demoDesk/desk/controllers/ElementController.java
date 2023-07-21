@@ -58,6 +58,7 @@ public class ElementController {
     public List<Department> addNewElement() {
         return elementService.getAllDepartments();
     }
+
     @PostMapping("/editOrAddElementConfirm")
     public boolean editOrAddElementConfirm(@RequestBody Element element) {
         return elementService.editOrAddElementConfirm(element);
