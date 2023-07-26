@@ -75,23 +75,23 @@ public class TaskController {
     }
 
     //Удалить выбранный тикет
-    @DeleteMapping ("/delete/{id}")
+    @DeleteMapping ("/deleteTask/{id}")
     public boolean deleteTask(@PathVariable(value = "id") Long id) {
         taskService.deleteTaskById(id);
         return true;
     }
 
     //Редактировать выбранный тикет
-    @GetMapping("/edit/{id}")
+    @GetMapping("/editTask/{id}")
     public TaskEditDto editTask(@PathVariable(value = "id") Long id) {
         return taskService.prepareTaskEditDto(id);
     }
 
-//    @PostMapping("/edit/confirm")
-//    public boolean taskEditConfirm(@RequestBody Task task) {
-//        ticketService.ticketEditExecute(ticketEdit);
-//        return true;
-//    }
+    @PostMapping("/edit/confirm")
+    public boolean taskEditConfirm(@RequestBody Task task) {
+        taskService.saveTask(task);
+        return true;
+    }
 
     @PostMapping("/changeTaskStatus/{id}")
     public boolean changeTaskStatus(@PathVariable(value = "id") Long id,

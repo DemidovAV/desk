@@ -134,7 +134,7 @@ public class TicketService {
 		Element searchElement = elementRepository.findById(element.getId()).orElse(null);
 		assert searchElement != null;
 		Department dep = searchElement.getDepartment();
-		List<Employee> employees = dep.getEmployees();
+		List<Employee> employees = dep.getEmployees().stream().filter(e -> e.getStatus().equals("Workable")).collect(Collectors.toList());
 		return employees.stream().min(Comparator.comparingInt(e -> e.getTasks().size())).orElseGet(null);
 	}
 	@Transactional

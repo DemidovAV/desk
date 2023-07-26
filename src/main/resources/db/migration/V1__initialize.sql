@@ -21,7 +21,7 @@ CREATE TABLE elements (
     id serial PRIMARY KEY,
     art varchar(100),
     title varchar(100),
-    department_id int references departments,
+    department_id int references departments on delete cascade,
     description varchar);
 
 INSERT INTO elements (art, title, department_id, description)
@@ -68,11 +68,11 @@ CREATE TABLE employees (
     department_id int references departments on delete cascade,
     status varchar);
 
-INSERT INTO employees (name, department_id)
-VALUES ('Mihail', 1),
-       ('Aleksey', 2),
-       ('Vasya', 2),
-       ('Elena', 1);
+INSERT INTO employees (name, department_id, status)
+VALUES ('Mihail', 1, 'Workable'),
+       ('Aleksey', 2, 'Ill'),
+       ('Vasya', 2, 'Workable'),
+       ('Elena', 1, 'Workable');
 
 CREATE TABLE tasks (
     id serial PRIMARY KEY,

@@ -87,10 +87,11 @@ public class EmployeeService {
             case "vacation":
                 employee.setStatus(EmployeeStatus.VACATION.getTitle());
                 break;
-            case  "working":
+            case  "workable":
                 employee.setStatus(EmployeeStatus.WORKING.getTitle());
                 break;
         }
         employeeRepository.save(employee);
     }
+
 }

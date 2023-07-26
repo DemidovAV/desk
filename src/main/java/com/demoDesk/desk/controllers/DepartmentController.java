@@ -1,6 +1,7 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.departmentDto.ShowDepartmentDto;
+import com.demoDesk.desk.dto.employeeDto.AddNewEmployeeDto;
 import com.demoDesk.desk.models.personel.Department;
 import com.demoDesk.desk.models.personel.Employee;
 import com.demoDesk.desk.services.DepartmentService;
@@ -51,6 +52,12 @@ public class DepartmentController {
     @GetMapping("/deleteDepartment/{id}")
     public boolean deleteDepartment(@PathVariable(value="id") Long id) {
         departmentService.deleteById(id);
+        return true;
+    }
+
+    @PostMapping("/saveNewEmployeeInDepartment/")
+    public boolean saveNewEmployeeInDepartment(@RequestBody AddNewEmployeeDto newEmployeeDto) {
+        departmentService.addNewEmployeeToDepartment(newEmployeeDto);
         return true;
     }
 

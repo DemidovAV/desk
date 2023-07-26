@@ -102,7 +102,7 @@ public class TicketController {
     }
 
     //Удалить выбранный тикет
-    @DeleteMapping ("/delete/{id}")
+    @DeleteMapping ("/deleteTicket/{id}")
     public boolean deleteTicket(@PathVariable(value = "id") Long id) {
         ticketService.deleteTicketById(id);
         return true;

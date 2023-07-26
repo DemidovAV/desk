@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -85,9 +86,14 @@ public class TaskService {
 
     public TaskEditDto prepareTaskEditDto(Long id) {
         TaskEditDto taskEditDto = new TaskEditDto();
-        taskEditDto.setTask(findById(id));
-        taskEditDto.setElements(elementRepository.findAll());
-        taskEditDto.setEmployees(employeeRepository.findAll());
+        Task task = findById(id);
+        taskEditDto.setTask(task);
+        taskEditDto.setElements(elementRepository.findAll().stream()
+                .filter(e -> Objects.equals(e.getDepartment().getId(), task.getExecutor().getDepartment().getId()))
+                .collect(Collectors.toList()));
+        taskEditDto.setEmployees(employeeRepository.findAll().stream()
+                .filter(e -> Objects.equals(e.getDepartment().getId(), task.getExecutor().getDepartment().getId()))
+                .collect(Collectors.toList()));
         return taskEditDto;
     }
 
