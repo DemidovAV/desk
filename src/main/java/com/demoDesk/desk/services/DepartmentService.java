@@ -22,10 +22,6 @@ public class DepartmentService {
 
     private final EmployeeRepository employeeRepository;
 
-    public List<Department> getDepartmentsWithFiltering(Specification<Department> specification) {
-        return departmentRepository.findAll(specification);
-    }
-
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
     }
