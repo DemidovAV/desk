@@ -1,6 +1,7 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.productDto.ProductEditDto;
+import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.productDto.ProductTransferDto;
 import com.demoDesk.desk.dto.productDto.ShowProductsDto;
 import com.demoDesk.desk.models.nomenclature.Element;
@@ -55,19 +56,36 @@ public class ProductsController {
         showProductsDto.setFilter(null);
         return showProductsDto;
     }
-    @GetMapping("/editProduct/{id}")
-    public ProductEditDto showEditProduct(@PathVariable(value="id") Long id){
+
+    @GetMapping("/showOrEditProduct/{id}")
+    public ProductTransferDto showOrEditProduct(@PathVariable(value="id") Long id) {
         Product product = productService.getProductById(id);
-        ProductEditDto productEditDto = new ProductEditDto();
-        productEditDto.setProductTransfer(productService.getProductTransferEntity(product));
-        productEditDto.setElements(productService.getAllElements());
-        return productEditDto;
+        return productService.getProductTransferDto(product);
     }
 
-    @PostMapping("/editProduct/confirm")
-    public boolean editConfirm(@RequestBody ProductTransferDto productTransferDto) {
-       productService.confirmProductEdit(productTransferDto);
-       return true;
+    @PostMapping("/saveProduct")
+    public ProductTransferDto saveNewOrEditedProduct(@RequestBody ProductTransferDto productTransferDto) {
+        return productService.addOrEditProductConfirm(productTransferDto);
+    }
+
+    @GetMapping("/showElementsInProduct/{id}")
+    public List<ProductElementInfo> getElementsInProduct (@PathVariable(value="id") Long id) {
+       return productService.getProductElementInfoList(productService.getProductById(id));
+    }
+
+    @PostMapping("/showElementsInProduct/deleteElement")
+    public boolean deleteElementFromProduct(@RequestParam(value = "productId") Long productId,
+                                            @RequestParam(value = "elementId") Long elementId) {
+        productService.deleteElementFromProduct(productId, elementId);
+        return true;
+    }
+
+    @PostMapping("/showElementsInProduct/changeElementQuantity")
+    public boolean changeElementQuantityInProduct(@RequestParam(value = "productId") Long productId,
+                                                  @RequestParam(value = "elementId") Long elementId,
+                                                  @RequestParam(value = "quantity") Integer quantity){
+        productService.changeElementQuantityInProduct(productId, elementId, quantity);
+        return true;
     }
 
 
@@ -80,12 +98,6 @@ public class ProductsController {
     public boolean addConfirm(@RequestBody ProductTransferDto product) {
         productService.saveNewProduct(product);
         return true;
-    }
-
-    @GetMapping("/showProduct/{id}")
-    public ProductTransferDto showOneProduct(@PathVariable(value="id") Long id) {
-        Product product = productService.getProductById(id);
-        return productService.getProductTransferEntity(product);
     }
 
     @DeleteMapping ("/deleteProduct/{id}")

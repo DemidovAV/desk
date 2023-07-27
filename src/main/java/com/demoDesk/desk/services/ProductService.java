@@ -55,15 +55,15 @@ public class ProductService {
     public List<ProductElementInfo> getProductElementInfoList(Product product) {
         List<ProductElementInfo> productElementInfoList = new ArrayList<>();
         Set<Element> elementList = product.getElementsInProduct();
-        for(Element e: elementList) {
+        for(Element element: elementList) {
             productElementInfoList.add(
-                    new ProductElementInfo(e, productsElementsRepository.getElementQuantityInProduct(product.getId(), e.getId()))
+                    new ProductElementInfo(element, productsElementsRepository.getElementQuantityInProduct(product.getId(), element.getId()))
             );
         }
         return productElementInfoList;
     }
 
-    public ProductTransferDto getProductTransferEntity(Product product) {
+    public ProductTransferDto getProductTransferDto(Product product) {
         ProductTransferDto productTransferDto = new ProductTransferDto();
         productTransferDto.setId(product.getId());
         productTransferDto.setArt(product.getArt());
@@ -78,7 +78,7 @@ public class ProductService {
         savingProduct.setArt(productTransferDto.getArt());
         savingProduct.setTitle(productTransferDto.getTitle());
         savingProduct.setDescription(productTransferDto.getDescription());
-        savingProduct = productRepository.save(savingProduct);
+        productRepository.save(savingProduct);
         List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
         for(ProductElementInfo pe:productElementInfos) {
             if(savingProduct.getElementsInProduct().contains(pe.getElement())) {
@@ -96,6 +96,27 @@ public class ProductService {
         }
     }
 
+    @Transactional
+    public ProductTransferDto addOrEditProductConfirm (ProductTransferDto productTransferDto) {
+        Product savingProduct = productRepository.findById(productTransferDto.getId()).orElse(new Product());
+        savingProduct.setArt(productTransferDto.getArt());
+        savingProduct.setTitle(productTransferDto.getTitle());
+        savingProduct.setDescription(productTransferDto.getDescription());
+        savingProduct = productRepository.save(savingProduct);
+        return getProductTransferDto(savingProduct);
+    }
+
+    @Transactional
+    public void deleteElementFromProduct(Long productId, Long elementId) {
+        Product product = getProductById(productId);
+        product.removeElement(elementRepository.getReferenceById(elementId));
+    }
+
+    @Transactional
+    public void changeElementQuantityInProduct(Long productId, Long elementId, Integer quantity) {
+        productsElementsRepository.saveEditedElementQuantityInProduct(productId, elementId, quantity);
+    }
+
     /**
      * ну тут тоже можно объединить в единый метод с confirmProductEdit внимательнее посмотри, код прям идентичен
      * немного логики добавить и все
@@ -109,7 +130,7 @@ public class ProductService {
         product.setDescription(productTransferDto.getDescription());
         productRepository.save(product);
         List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
-        for(ProductElementInfo pei: productElementInfos) {
+        for (ProductElementInfo pei : productElementInfos) {
             ProductsElements productsElements = new ProductsElements();
             productsElements.setProductId(product.getId());
             productsElements.setElementId(pei.getElement().getId());

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-//Компонент изделия, в одном изделии много компонентов и один компонент присутствует во многих изделиях
+//Компонент изделия, в одном изделии много компонентов и один компонент может присутствовать во многих изделиях
 @Entity
 @Table(name = "elements")
 @NoArgsConstructor

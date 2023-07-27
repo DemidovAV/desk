@@ -11,7 +11,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+//Таск, автоматически формируется при создании тикета. В дальнейшем есть возможность редактирования
 @Entity
 @Table(name = "tasks")
 @Setter

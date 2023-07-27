@@ -10,10 +10,9 @@ import javax.persistence.NamedNativeQuery;
 public interface ProductsElementsRepository extends JpaRepository<ProductsElements, Long> {
     @Query("SELECT pe.elementQuantity FROM ProductsElements pe WHERE pe.productId=:productId AND pe.elementId=:elementId")
     Integer getElementQuantityInProduct(Long productId, Long elementId);
+    @Modifying
     @Query("UPDATE ProductsElements pe SET pe.elementQuantity=:quantity WHERE pe.productId=:productId AND pe.elementId=:elementId")
     void saveEditedElementQuantityInProduct(Long productId, Long elementId, Integer quantity);
-    @Modifying
-    @Query("DELETE FROM ProductsElements pe WHERE pe.productId=:productId AND pe.elementId=:elementId")
-    void deleteProductsElementsByProductIdElementId(Long productId, Long elementId);
+
 
 }

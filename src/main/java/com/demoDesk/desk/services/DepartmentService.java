@@ -9,7 +9,6 @@ import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

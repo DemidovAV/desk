@@ -8,7 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-
+//Сотрудник, привязан к определенному отделу
 @Entity
 @Table(name = "Employees")
 @Setter
