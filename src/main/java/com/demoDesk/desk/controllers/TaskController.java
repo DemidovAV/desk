@@ -2,9 +2,7 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.taskDto.ShowTasksDto;
 import com.demoDesk.desk.dto.taskDto.TaskEditDto;
-import com.demoDesk.desk.dto.ticketDto.ShowTicketsDto;
 import com.demoDesk.desk.models.queries.Task;
-import com.demoDesk.desk.models.queries.Ticket;
 import com.demoDesk.desk.repositories.specifications.TaskSpec;
 import com.demoDesk.desk.services.TaskService;
 import lombok.RequiredArgsConstructor;

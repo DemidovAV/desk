@@ -72,10 +72,6 @@ public class TicketController {
         return showTicketsDto;
     }
 
-    /**
-     * ПОЧЕМУ в контроллере тикета у тебя висят продуктовые точки входа?
-     * и я до конца не осознал смысл этих точек входа
-     */
     //создание тикета - отсылаем список изделий
     @GetMapping("/createTicket")
     public List<Product> createNewTicket() {

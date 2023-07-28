@@ -47,5 +47,8 @@ public class Product {
         this.elementsInProduct.remove(element);
         element.getProductsWithElement().remove(this);
     }
+    public void addElement(Element element) {
+        this.elementsInProduct.add(element);
+    }
 
 }

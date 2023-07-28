@@ -1,10 +1,12 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.elementDto.AddElementToProductDto;
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.productDto.ProductTransferDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.nomenclature.ProductsElements;
+import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.ElementRepository;
 import com.demoDesk.desk.repositories.ProductRepository;
 import com.demoDesk.desk.repositories.ProductsElementsRepository;
@@ -25,6 +27,8 @@ public class ProductService {
     private final ProductsElementsRepository productsElementsRepository;
     private final ElementRepository elementRepository;
     private final ProductRepository productRepository;
+
+    private final DepartmentRepository departmentRepository;
 
     public List<Product> getProductsWithFiltering(Specification<Product> specification) {
         return productRepository.findAll(specification);
@@ -117,27 +121,24 @@ public class ProductService {
         productsElementsRepository.saveEditedElementQuantityInProduct(productId, elementId, quantity);
     }
 
-    /**
-     * ну тут тоже можно объединить в единый метод с confirmProductEdit внимательнее посмотри, код прям идентичен
-     * немного логики добавить и все
-     *
-     */
     @Transactional
-    public void saveNewProduct(ProductTransferDto productTransferDto) {
-        Product product = new Product();
-        product.setArt(productTransferDto.getArt());
-        product.setTitle(productTransferDto.getTitle());
-        product.setDescription(productTransferDto.getDescription());
-        productRepository.save(product);
-        List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
-        for (ProductElementInfo pei : productElementInfos) {
-            ProductsElements productsElements = new ProductsElements();
-            productsElements.setProductId(product.getId());
-            productsElements.setElementId(pei.getElement().getId());
-            productsElements.setElementQuantity(pei.getCount());
-            productsElementsRepository.save(productsElements);
+    public void addElementToProduct(Long productId, AddElementToProductDto addElementToProductDto) {
+        Product product = productRepository.getReferenceById(productId);
+        Element savingElement;
+        if (addElementToProductDto.getElement().getId() != null) {
+            savingElement = elementRepository.getReferenceById(addElementToProductDto.getElement().getId());
+        } else {
+            savingElement = Element.builder()
+                    .art(addElementToProductDto.getElement().getArt())
+                    .department(departmentRepository.getReferenceById(addElementToProductDto.getDepartmentId()))
+                    .description(addElementToProductDto.getElement().getDescription())
+                    .title(addElementToProductDto.getElement().getTitle())
+                    .build();
+            savingElement = elementRepository.save(savingElement);
         }
+        product.addElement(savingElement);
+        productRepository.save(product);
+        productsElementsRepository.saveEditedElementQuantityInProduct(productId, savingElement.getId(), addElementToProductDto.getQuantity());
     }
-
 
 }

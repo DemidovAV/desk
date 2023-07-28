@@ -1,6 +1,6 @@
 package com.demoDesk.desk.controllers;
 
-import com.demoDesk.desk.dto.productDto.ProductEditDto;
+import com.demoDesk.desk.dto.elementDto.AddElementToProductDto;
 import com.demoDesk.desk.dto.productDto.ProductElementInfo;
 import com.demoDesk.desk.dto.productDto.ProductTransferDto;
 import com.demoDesk.desk.dto.productDto.ShowProductsDto;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Тут аналогичные вопросы с остальными контроллерами
- */
 
 @RestController
 @RequestMapping("/products")
@@ -88,15 +85,15 @@ public class ProductsController {
         return true;
     }
 
-
-    @GetMapping("/addProduct")
-    public List<Element> addProduct() {
+    @GetMapping("/showElementsInProduct/addExistingElement")
+    public List<Element> showElementsToAdd() {
         return productService.getAllElements();
     }
 
-    @PostMapping("/addProduct/confirm")
-    public boolean addConfirm(@RequestBody ProductTransferDto product) {
-        productService.saveNewProduct(product);
+    @PostMapping("/showElementsInProduct/addElementToProduct/{id}")
+    public boolean addExistingElementToProduct(@PathVariable(value = "id") Long productId,
+                                               @RequestBody AddElementToProductDto addElementToProductDto) {
+        productService.addElementToProduct(productId, addElementToProductDto);
         return true;
     }
 

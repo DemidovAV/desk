@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Element {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

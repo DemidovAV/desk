@@ -1,5 +1,6 @@
 package com.demoDesk.desk.services;
 
+import com.demoDesk.desk.dto.elementDto.ElementEditOrAddDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.nomenclature.Product;
 import com.demoDesk.desk.models.personel.Department;
@@ -58,10 +59,11 @@ public class ElementService {
      *         jpaInsuranceCompanyRepository.save(entity);
      */
 
-    public boolean editOrAddElementConfirm(Element element) {
+    public boolean editOrAddElementConfirm(ElementEditOrAddDto elementEditOrAddDto) {
+        Element element = elementEditOrAddDto.getElement();
         Element incomingElement = elementRepository.findById(element.getId()).orElse(new Element());
         incomingElement.setArt(element.getArt());
-        incomingElement.setDepartment(element.getDepartment());
+        incomingElement.setDepartment(departmentRepository.getReferenceById(elementEditOrAddDto.getDepartmentId()));
         incomingElement.setTitle(element.getTitle());
         incomingElement.setDescription(element.getDescription());
         elementRepository.save(incomingElement);

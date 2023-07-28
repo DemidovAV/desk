@@ -1,5 +1,6 @@
 package com.demoDesk.desk.controllers;
 
+import com.demoDesk.desk.dto.elementDto.ElementEditOrAddDto;
 import com.demoDesk.desk.dto.elementDto.ShowElementsDto;
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.demoDesk.desk.models.personel.Department;
@@ -60,8 +61,8 @@ public class ElementController {
     }
 
     @PostMapping("/editOrAddElementConfirm")
-    public boolean editOrAddElementConfirm(@RequestBody Element element) {
-        return elementService.editOrAddElementConfirm(element);
+    public boolean editOrAddElementConfirm(@RequestBody ElementEditOrAddDto elementEditOrAddDto) {
+        return elementService.editOrAddElementConfirm(elementEditOrAddDto);
     }
 
     @GetMapping("/showElement/{id}")
