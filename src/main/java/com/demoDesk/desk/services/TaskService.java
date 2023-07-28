@@ -20,9 +20,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * тут аналогично с TicketService, не забудь про транзакции(они не везде должны быть)
- */
 @Service
 @RequiredArgsConstructor
 public class TaskService {

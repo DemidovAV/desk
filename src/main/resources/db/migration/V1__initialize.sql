@@ -22,7 +22,8 @@ CREATE TABLE elements (
     art varchar(100),
     title varchar(100),
     department_id int references departments on delete cascade,
-    description varchar);
+    description varchar,
+    file bytea);
 
 INSERT INTO elements (art, title, department_id, description)
 VALUES ('el0001','Element1', 1, 'just element 1'),
