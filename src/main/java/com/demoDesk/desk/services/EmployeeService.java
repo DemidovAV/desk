@@ -40,10 +40,6 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    @Transactional
-    public void saveEmployee(Employee employee) {
-        employeeRepository.save(employee);
-    }
 
     public List<Employee> sortEmployees(List<Employee> employees, String sortParameter) {
         switch (sortParameter) {

@@ -46,17 +46,6 @@ public class ElementService {
         return departmentRepository.findAll();
     }
 
-    /**
-     * Тут по примеру с TicketController можно совместить с /editElement/confirm, нет смысла городить кучу точек входа
-     * вот пример, тут производится  поиск записи в базе, если в базе нет, то создается новая, затем мы ее заполняем
-     * данными пришедшими с фронта и сохраняем/обновляем запись в бд
-     * InsuranceCompanyEntity entity = jpaInsuranceCompanyRepository.findById(insuranceCompany.getId())
-     *             .orElse(new InsuranceCompanyEntity());
-     *         entity.setId(insuranceCompany.getId());
-     *         entity.setName(insuranceCompany.getName());
-     *
-     *         jpaInsuranceCompanyRepository.save(entity);
-     */
 
     public boolean editOrAddElementConfirm(ElementEditOrAddDto elementEditOrAddDto) {
         Element element = elementEditOrAddDto.getElement();

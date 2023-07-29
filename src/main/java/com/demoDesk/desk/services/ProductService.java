@@ -47,10 +47,6 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    @Transactional
-    public void saveProduct(Product product) {
-        productRepository.save(product);
-    }
 
     public List<Element> getAllElements() {
         return elementRepository.findAll();
@@ -76,29 +72,29 @@ public class ProductService {
         productTransferDto.setProductElementInfoList(getProductElementInfoList(product));
         return productTransferDto;
     }
-    @Transactional
-    public void confirmProductEdit (ProductTransferDto productTransferDto) {
-        Product savingProduct = productRepository.findById(productTransferDto.getId()).orElse(new Product());
-        savingProduct.setArt(productTransferDto.getArt());
-        savingProduct.setTitle(productTransferDto.getTitle());
-        savingProduct.setDescription(productTransferDto.getDescription());
-        productRepository.save(savingProduct);
-        List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
-        for(ProductElementInfo pe:productElementInfos) {
-            if(savingProduct.getElementsInProduct().contains(pe.getElement())) {
-                productsElementsRepository.saveEditedElementQuantityInProduct(
-                        savingProduct.getId(),
-                        pe.getElement().getId(),
-                        pe.getCount());
-            } else {
-                ProductsElements productsElements = new ProductsElements();
-                productsElements.setProductId(savingProduct.getId());
-                productsElements.setElementId(pe.getElement().getId());
-                productsElements.setElementQuantity(pe.getCount());
-                productsElementsRepository.save(productsElements);
-            }
-        }
-    }
+//    @Transactional
+//    public void confirmProductEdit (ProductTransferDto productTransferDto) {
+//        Product savingProduct = productRepository.findById(productTransferDto.getId()).orElse(new Product());
+//        savingProduct.setArt(productTransferDto.getArt());
+//        savingProduct.setTitle(productTransferDto.getTitle());
+//        savingProduct.setDescription(productTransferDto.getDescription());
+//        productRepository.save(savingProduct);
+//        List<ProductElementInfo> productElementInfos = productTransferDto.getProductElementInfoList();
+//        for(ProductElementInfo pe:productElementInfos) {
+//            if(savingProduct.getElementsInProduct().contains(pe.getElement())) {
+//                productsElementsRepository.saveEditedElementQuantityInProduct(
+//                        savingProduct.getId(),
+//                        pe.getElement().getId(),
+//                        pe.getCount());
+//            } else {
+//                ProductsElements productsElements = new ProductsElements();
+//                productsElements.setProductId(savingProduct.getId());
+//                productsElements.setElementId(pe.getElement().getId());
+//                productsElements.setElementQuantity(pe.getCount());
+//                productsElementsRepository.save(productsElements);
+//            }
+//        }
+//    }
 
     @Transactional
     public ProductTransferDto addOrEditProductConfirm (ProductTransferDto productTransferDto) {
