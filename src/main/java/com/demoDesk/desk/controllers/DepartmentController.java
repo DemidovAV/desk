@@ -2,7 +2,7 @@ package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.departmentDto.ShowDepartmentDto;
 import com.demoDesk.desk.dto.employeeDto.AddNewEmployeeDto;
-import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personnel.Department;
 import com.demoDesk.desk.services.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

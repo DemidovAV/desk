@@ -2,9 +2,9 @@ package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.dto.departmentDto.ShowDepartmentDto;
 import com.demoDesk.desk.dto.employeeDto.AddNewEmployeeDto;
-import com.demoDesk.desk.models.personel.Department;
-import com.demoDesk.desk.models.personel.Employee;
-import com.demoDesk.desk.models.personel.EmployeeStatus;
+import com.demoDesk.desk.models.personnel.Department;
+import com.demoDesk.desk.models.personnel.Employee;
+import com.demoDesk.desk.models.personnel.EmployeeStatus;
 import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.specifications.DepartmentSpec;

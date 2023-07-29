@@ -1,4 +1,4 @@
-package com.demoDesk.desk.models.personel;
+package com.demoDesk.desk.models.personnel;
 
 import com.demoDesk.desk.models.nomenclature.Element;
 import com.fasterxml.jackson.annotation.JsonIgnore;

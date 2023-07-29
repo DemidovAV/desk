@@ -1,7 +1,7 @@
 package com.demoDesk.desk.controllers;
 
 import com.demoDesk.desk.dto.employeeDto.ShowEmployeesDto;
-import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.personnel.Employee;
 import com.demoDesk.desk.models.queries.Task;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import com.demoDesk.desk.services.EmployeeService;

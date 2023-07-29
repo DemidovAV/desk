@@ -1,7 +1,7 @@
 package com.demoDesk.desk.dto.taskDto;
 
 import com.demoDesk.desk.models.nomenclature.Element;
-import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.personnel.Employee;
 import com.demoDesk.desk.models.queries.Task;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

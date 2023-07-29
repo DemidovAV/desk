@@ -1,6 +1,6 @@
 package com.demoDesk.desk.models.nomenclature;
 
-import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personnel.Department;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 

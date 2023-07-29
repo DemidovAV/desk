@@ -3,7 +3,7 @@ package com.demoDesk.desk.controllers;
 import com.demoDesk.desk.dto.elementDto.ElementEditOrAddDto;
 import com.demoDesk.desk.dto.elementDto.ShowElementsDto;
 import com.demoDesk.desk.models.nomenclature.Element;
-import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personnel.Department;
 import com.demoDesk.desk.repositories.specifications.ElementSpec;
 import com.demoDesk.desk.services.ElementService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.demoDesk.desk.dto.employeeDto;
 
-import com.demoDesk.desk.models.personel.Employee;
+import com.demoDesk.desk.models.personnel.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

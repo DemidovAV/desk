@@ -1,10 +1,9 @@
 package com.demoDesk.desk.services;
 
 import com.demoDesk.desk.models.enums.RequestStatus;
-import com.demoDesk.desk.models.personel.Employee;
-import com.demoDesk.desk.models.personel.EmployeeStatus;
+import com.demoDesk.desk.models.personnel.Employee;
+import com.demoDesk.desk.models.personnel.EmployeeStatus;
 import com.demoDesk.desk.models.queries.Task;
-import com.demoDesk.desk.repositories.DepartmentRepository;
 import com.demoDesk.desk.repositories.EmployeeRepository;
 import com.demoDesk.desk.repositories.specifications.EmployeeSpec;
 import lombok.RequiredArgsConstructor;

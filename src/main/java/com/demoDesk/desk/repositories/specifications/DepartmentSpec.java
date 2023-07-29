@@ -1,6 +1,6 @@
 package com.demoDesk.desk.repositories.specifications;
 
-import com.demoDesk.desk.models.personel.Department;
+import com.demoDesk.desk.models.personnel.Department;
 import org.springframework.data.jpa.domain.Specification;
 
 public class DepartmentSpec {

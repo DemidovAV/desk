@@ -1,8 +1,7 @@
-package com.demoDesk.desk.models.personel;
+package com.demoDesk.desk.models.personnel;
 
 import com.demoDesk.desk.models.queries.Task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
