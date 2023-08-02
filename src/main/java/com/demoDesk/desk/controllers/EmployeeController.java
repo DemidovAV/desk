@@ -18,28 +18,33 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    private Specification<Employee> filtration(String name) {
+    private Specification<Employee> filtration(String name, String departmentTitle) {
         Specification<Employee> spec = Specification.where(null);
         if(name != null) {
             spec = spec.and(EmployeeSpec.nameContains(name));
+        }
+        if(departmentTitle != null) {
+            spec = spec.and((EmployeeSpec.departmentTitleContains(departmentTitle)));
         }
         return spec;
     }
 
     //Получаем список сотрудников, можем отфильтровать по имени
     @GetMapping
-    public ShowEmployeesDto showEmployees(@RequestParam(value = "name", required = false) String name) {
+    public ShowEmployeesDto showEmployees(@RequestParam(value = "name", required = false) String name,
+                                          @RequestParam(value = "depTitle", required = false) String departmentTitle) {
         return ShowEmployeesDto.builder()
                 .name(name)
-                .employees(employeeService.getEmployeesWithFiltering(filtration(name)))
+                .employees(employeeService.getEmployeesWithFiltering(filtration(name, departmentTitle)))
                 .build();
     }
 
     //Сортировка отфильтрованного списка по параметру 'sort': department или status.
     @PostMapping
     public ShowEmployeesDto showEmployeesSorted(@RequestParam(value = "name", required = false) String name,
+                                                @RequestParam(value = "depTitle", required = false) String departmentTitle,
                                                 @RequestParam(value = "sort") String sort) {
-        List<Employee> employees = employeeService.getEmployeesWithFiltering(filtration(name));
+        List<Employee> employees = employeeService.getEmployeesWithFiltering(filtration(name, departmentTitle));
         return ShowEmployeesDto.builder()
                 .name(name)
                 .employees(employeeService.sortEmployees(employees, sort))

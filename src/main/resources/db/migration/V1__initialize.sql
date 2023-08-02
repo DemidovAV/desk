@@ -22,8 +22,7 @@ CREATE TABLE elements (
     art varchar(100),
     title varchar(100),
     department_id int references departments on delete cascade,
-    description varchar,
-    file bytea);
+    description varchar);
 
 INSERT INTO elements (art, title, department_id, description)
 VALUES ('el0001','Element1', 1, 'just element 1'),
@@ -59,8 +58,6 @@ CREATE TABLE tickets (
     priority int,
     expiration_date timestamp,
     comment varchar);
-
--- INSERT INTO tickets (title, creation_date, close_date, status, product_id, quantity, priority, expiration_date, comment)
 
 
 CREATE TABLE employees (

@@ -20,35 +20,20 @@ public class DepartmentController {
         return departmentService.getAllDepartments();
     }
 
-    @GetMapping("/editDepartment/{id}")
-    public Department showEditDepartment(@PathVariable(value="id") Long id){
-        return departmentService.getDepartmentById(id);
-    }
 
-    @PostMapping("/editDepartment/confirm")
+    @PostMapping("/editOrAddDepartment/confirm")
     public boolean editElementConfirm(@RequestBody Department department) {
         departmentService.saveDepartment(department);
         return true;
     }
 
 
-    @GetMapping("/addDepartment")
-    public Department addNewElement() {
-        return new Department();
-    }
-    //
-    @PostMapping("/addDepartment/confirm")
-    public boolean addDepartmentConfirm(@RequestBody Department department) {
-        departmentService.saveDepartment(department);
-        return true;
-    }
-
-    @GetMapping("/showDepartment/{id}")
+    @GetMapping("/getDepartmentInfo/{id}")
     public ShowDepartmentDto showOneDepartment(@PathVariable(value="id") Long id) {
         return departmentService.showDepartmentWithEmployees(id);
     }
 
-    @GetMapping("/deleteDepartment/{id}")
+    @DeleteMapping("/deleteDepartment/{id}")
     public boolean deleteDepartment(@PathVariable(value="id") Long id) {
         departmentService.deleteById(id);
         return true;

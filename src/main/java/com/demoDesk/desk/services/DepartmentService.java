@@ -36,7 +36,10 @@ public class DepartmentService {
 
     @Transactional
     public void saveDepartment(Department department) {
-        departmentRepository.save(department);
+        Department savingDep = departmentRepository.findById(department.getId()).orElse(new Department());
+        savingDep.setDescription(department.getDescription());
+        savingDep.setTitle(department.getTitle());
+        departmentRepository.save(savingDep);
     }
 
     public ShowDepartmentDto showDepartmentWithEmployees(Long id) {
@@ -47,6 +50,7 @@ public class DepartmentService {
                 .build();
     }
 
+    @Transactional
     public void addNewEmployeeToDepartment(AddNewEmployeeDto newEmployeeDto) {
         Employee employee = Employee.builder()
                 .department(departmentRepository.getReferenceById(newEmployeeDto.getDepartmentId()))
