@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -32,7 +32,7 @@ public class EmployeeController {
     //Получаем список сотрудников, можем отфильтровать по имени
     @GetMapping
     public ShowEmployeesDto showEmployees(@RequestParam(value = "name", required = false) String name,
-                                          @RequestParam(value = "depTitle", required = false) String departmentTitle) {
+                                          @RequestParam(value = "departmentTitle", required = false) String departmentTitle) {
         return ShowEmployeesDto.builder()
                 .name(name)
                 .employees(employeeService.getEmployeesWithFiltering(filtration(name, departmentTitle)))
@@ -67,7 +67,7 @@ public class EmployeeController {
     }
 
     //Получаем список тасков выбранного сотрудника
-    @PostMapping("/showEmployee/{id}/getTasks")
+    @GetMapping("/showEmployee/{id}/getTasks")
     public List<Task> employeeGetTasks(@PathVariable(value="id") Long id,
                                        @RequestParam(value = "requestStatus") String requestStatus) {
         return employeeService.getTasksByRequestStatus(id, requestStatus);
@@ -81,7 +81,7 @@ public class EmployeeController {
         return true;
     }
 
-    @PostMapping("/deleteEmployee/{id}")
+    @DeleteMapping("/deleteEmployee/{id}")
     public boolean deleteEmployee(@PathVariable(value = "id") Long id) {
         employeeService.deleteById(id);
         return true;

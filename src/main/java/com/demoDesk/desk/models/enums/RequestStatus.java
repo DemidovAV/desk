@@ -3,8 +3,8 @@ package com.demoDesk.desk.models.enums;
 public enum RequestStatus {
     IN_PROGRESS ("In progress"),
     COMPLETE ("Complete"),
-    CANCELED ("Canceled");
-
+    CANCELED ("Canceled"),
+    WAIT("Waiting");
     private final String title;
     RequestStatus(String title) {
         this.title = title;

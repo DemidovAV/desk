@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ShowEmployeesDto {
     private String name;
+    private String departmentTitle;
     private List<Employee> employees;
 
 }

@@ -43,12 +43,12 @@ public class EmployeeService {
 
     public List<Employee> sortEmployees(List<Employee> employees, String sortParameter) {
         switch (sortParameter) {
-            case "department": {
+            case "department":
                 return employees.stream().sorted(Comparator.comparing(Employee::getDepartmentTitle)).collect(Collectors.toList());
-            }
-            case "status": {
+
+            case "status":
                 return employees.stream().sorted(Comparator.comparing(Employee::getStatus)).collect(Collectors.toList());
-            }
+
             default:
                 return employees;
         }
@@ -58,15 +58,18 @@ public class EmployeeService {
     public List<Task> getTasksByRequestStatus(Long id, String requestStatus) {
         List<Task> tasks = Objects.requireNonNull(employeeRepository.findOne(EmployeeSpec.findById(id)).orElse(null)).getTasks();
         switch (requestStatus) {
-            case "inProgress": {
+            case "inProgress":
                 return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.IN_PROGRESS.getTitle())).collect(Collectors.toList());
-            }
-            case "complete": {
+
+            case "complete":
                 return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.COMPLETE.getTitle())).collect(Collectors.toList());
-            }
-            case "canceled": {
+
+            case "canceled":
                 return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.CANCELED.getTitle())).collect(Collectors.toList());
-            }
+
+            case "wait":
+                return tasks.stream().filter(task -> task.getRequestStatus().equals(RequestStatus.WAIT.getTitle())).collect(Collectors.toList());
+
             default:
                 return tasks;
         }

@@ -68,6 +68,8 @@
 		<!--</dependency>-->
 	</dependencies>
 
+	<packaging>jar</packaging>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -89,5 +91,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>serviceDesk</finalName>
 	</build>
 </project>

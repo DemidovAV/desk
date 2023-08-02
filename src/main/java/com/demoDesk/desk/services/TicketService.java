@@ -125,6 +125,7 @@ public class TicketService {
 							.expirationDate(creationDto.getExpirationDate())
 							.priority(creationDto.getPriority())
 							.executor(getEmployeeForTask(pei.getElement()))
+							.requestStatus(RequestStatus.WAIT.getTitle())
 							.build()
 			);
 		}
