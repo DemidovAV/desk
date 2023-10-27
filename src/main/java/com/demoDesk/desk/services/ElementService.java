@@ -37,16 +37,12 @@ public class ElementService {
         elementRepository.deleteById(id);
     }
 
-    @Transactional
-    public void saveElement(Element element) {
-        elementRepository.save(element);
-    }
 
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
     }
 
-
+    @Transactional
     public boolean editOrAddElementConfirm(ElementEditOrAddDto elementEditOrAddDto) {
         Element element = elementEditOrAddDto.getElement();
         Element incomingElement = elementRepository.findById(element.getId()).orElse(new Element());
