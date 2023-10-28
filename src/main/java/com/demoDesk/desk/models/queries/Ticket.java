@@ -14,7 +14,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-//Тикет - задание на производство определенного продукта, помимо данных состоит из тикетов
+//Тикет - задание на производство определенного продукта, помимо данных состоит из тасков
 @Entity
 @Table(name = "tickets")
 @Data
