@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ElementSpec {
     public static Specification<Element> titleContains(String word) {
-        return (Specification<Element>) (root, criteriaQuery, criteriaBuilder) ->
+        return (root, criteriaQuery, criteriaBuilder) ->
                     criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + word.toLowerCase() + "%");
     }
 

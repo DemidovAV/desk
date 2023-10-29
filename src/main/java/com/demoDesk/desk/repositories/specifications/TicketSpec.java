@@ -5,12 +5,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class TicketSpec {
     public static Specification<Ticket> findById (Long id) {
-        return (Specification<Ticket>) (root, criteriaQuery, criteriaBuilder) ->
+        return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("id"), id);
     }
 
     public static Specification<Ticket> titleContains(String word) {
-        return (Specification<Ticket>) (root, criteriaQuery, criteriaBuilder) ->
+        return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + word.toLowerCase() + "%");
     }
 }
