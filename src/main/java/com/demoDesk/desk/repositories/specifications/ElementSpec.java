@@ -10,12 +10,12 @@ public class ElementSpec {
     }
 
     public static Specification<Element> findById (Long id) {
-        return (Specification<Element>) (root, criteriaQuery, criteriaBuilder) ->
+        return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("id"), id);
     }
 
     public static Specification<Element> artContains (String word) {
-        return (Specification<Element>) (root, criteriaQuery, criteriaBuilder) ->
+        return (root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("art")), "%" + word.toLowerCase() + "%");
     }
 }
