@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-//Сотрудник, привязан к определенному отделу проверка раз раз
+//Сотрудник, привязан к определенному отделу проверка раз раз ы ы
 @Entity
 @Table(name = "Employees")
 @Setter
